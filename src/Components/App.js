@@ -11,23 +11,26 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import Accueil from "./Accueil";
 
 function App() {
   const { token, setToken } = useToken();
+  const [ menuSelect, setMenu ] = useState();
 
-  if(!token) {
+
+  if(!token && menuSelect==undefined) {
     return <Login setToken={setToken} />
+  }
+
+  console.log("[app] var menuSelect "+menuSelect);
+  if(token && menuSelect==undefined){
+    return <Accueil userSelect={setMenu}/>
   }
 
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Administration 
-        </p>
-      </header>
+    <div>
+      <h1>Menu {menuSelect}</h1>
     </div>
   );
 }

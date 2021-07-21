@@ -17,7 +17,6 @@ import { render } from '@testing-library/react';
 export default function Login({ setToken }){
 
   const validateToken = async (values) => {
-    console.log('validateToken  ',values)
     const username = values.email;
     const password = values.password;
     const token = await LoginDev({
@@ -42,20 +41,12 @@ const ValidatedLoginForm = (validateToken) => (
     }}
     validate={values => {
       let errors = {};
-      if (!values.email) {
-        errors.email = "Requis";
-      } else if (!EmailValidator.validate(values.email)) {
-        errors.email = "Identifiant invalide.";
-      }
-
+      
+      //!values.email || !EmailValidator.validate(values.email) || 
       const passwordRegex = /(?=.*[0-9])/;
-      if (!values.password) {
-        errors.password = "Requis";
-      } else if (values.password.length < 8) {
-        errors.password = "Doit avoir au mois 8 caractères.";
-      } else if (!passwordRegex.test(values.password)) {
-        errors.password = "Mot de passe invalide. Il doit contenir un chiffre.";
-      }
+      if (!values.email || !EmailValidator.validate(values.email) || !values.password || values.password.length < 8 || !passwordRegex.test(values.password)) {
+        errors.password = "Le champs 'Indentifiants' ou 'Mot de passe' n'est pas corrects";
+      } 
 
       return errors;
     }}
@@ -90,9 +81,6 @@ const ValidatedLoginForm = (validateToken) => (
                   onBlur={handleBlur}
                   className={errors.email && touched.email && "error"}
                   />
-                  {errors.email && touched.email && (
-                    <div className="input-feedback">{errors.email}</div>
-                  )}
                 </div>
                 <div>
                   <input 
@@ -116,7 +104,7 @@ const ValidatedLoginForm = (validateToken) => (
               </form>
               <div className="footer" >
               <div style={{width:"480px"}}>Association reconnue d’utilité publique habilitée à recevoir dons, legs et donations</div>
-            </div>
+              </div>
           </div>
         </div>
       );
