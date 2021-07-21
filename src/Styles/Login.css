@@ -1,0 +1,113 @@
+
+.form {
+    margin-top: 0%;
+    position: absolute;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:100vw;
+    height:100vh;
+  }
+input {
+    padding:11px;
+    margin-top:10px;
+    font-size:1.1em; 
+    border-radius:4px; 
+    border:0px;
+    background-color:rgb(182, 213, 228);
+    border:0px;
+    width:300px;
+    color:rgb(112, 112, 112);
+    transition: ease-in-out background-color 250ms, ease-in-out color 250ms;
+}
+input:focus {
+    color:rgb(51, 51, 51);
+    border:0px;
+    outline: -webkit-focus-ring-color auto 0px;
+    background-color:white;
+}
+input:hover{
+  background-color: white;
+}
+input.error {
+  border-color: red;
+}
+
+.input-feedback {
+  color: white;
+  background-color: red;
+  margin-top: 2px;
+  margin-left: 25px;
+  font-size: .8em;
+  width:85%;
+  justify-content: center;
+    align-items: center;
+}
+button {
+  padding: 10px 15px;
+  background-color:rgb(36,155,215);
+  color: white;
+  border: 1px solid rgb(70, 153, 179);
+  transition: ease-in-out background-color 250ms, ease-in-out color 250ms;
+  font-size:1.2em;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: white;
+  color: rgb(70, 153, 179);
+}
+.logo{
+    height:100%;
+    width:105%;
+    position: fixed;
+    background-image: url("../Images/logo.svg");
+    background-repeat: no-repeat;
+    background-position: 95% 00%;
+    background-size: 30%;
+    
+}
+.YellowCircle{
+    z-index: 2;
+    position: absolute;
+    width:55em;
+    height:55em;
+    right:55vw;
+    top:-15em;
+    border-radius: 50%;
+    background-color: rgb(247,166,14);
+}
+.WhiteCircle{
+    z-index: 1;
+    position: absolute;
+    width:50em;
+    height:50em;
+    right:26vw;
+    top:-34em;
+    border-radius: 50%;
+    background-color:white;
+}
+.footer{
+    z-index: 5;
+    position: absolute;
+    bottom:5%;
+    color:white;
+    font-weight: lighter; 
+    font-size:.9em;
+}
+  /* Medium screens */
+@media all and (max-width: 800px) {
+    .nav {
+      /* When on medium sized screens, we center it by evenly distributing empty space around items */
+      justify-content: space-around;
+    }
+  }
+  
+  /* Small screens */
+  @media all and (max-width: 500px) {
+    .nav {
+      /* On small screens, we are no longer using row direction but column */
+      flex-direction: column;
+    }
+  }
