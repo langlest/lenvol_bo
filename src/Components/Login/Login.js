@@ -1,17 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Formik } from "formik"; // Validation reprise sur ....
 import * as EmailValidator from "email-validator"; //https://www.digitalocean.com/community/tutorials/how-to-validate-a-login-form-with-react-and-formik
 
 import PropTypes from 'prop-types';
 import { LoginDev } from "../../api/APIUtils";
-import useToken from '../../App/useToken';
 import '../../Styles/Login.css';
-import {
-    Link
-  } from "react-router-dom";
-import { render } from '@testing-library/react';
-
 
 
 export default function Login({ setToken }){
@@ -70,7 +64,7 @@ const ValidatedLoginForm = (validateToken) => (
           <div className="YellowCircle " />
           <div className="form">
               <form style={{textAlign:"center"}} onSubmit={handleSubmit}>
-                <div style={{color:'white',fontWeight: 'lighter'}}>Bienvenue dans l’administration l’Envol</div>
+                <div style={{color:'white',fontWeight: 'lighter'}}>Bienvenue dans l’administration l’ENVOL</div>
                 <div>
                   <input 
                   id="email"

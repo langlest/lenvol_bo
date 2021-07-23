@@ -1,8 +1,8 @@
-const domainPath = 'http://localhost:3000/';
+const domainPath = 'http://localhost:8080/';
 
 /////////////////////////////////
 ////////  API 
-////////  avec serveur
+////////  connexion avec serveur
 export async function LoginApi(username,password){
     
     const routeApi = 'login';
@@ -20,9 +20,35 @@ export async function LoginApi(username,password){
     .then(data => data.json())
 }
 
-////////  sans serveur
+////////  connexion locale sans serveur
 export async function LoginDev(username,password){
   console.log("API LoginDev var unsername : ",username);
     const t = {"token":"test123"};
     return t;
+}
+
+/////////////////////////////////////////
+////////  categorie
+export async function listeCategories(){
+    
+  /*const routeApi = 'categories';
+  const uriApi = domainPath+routeApi;
+  
+  fetch(uriApi, {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+  })
+  .then(data => {
+    return data.json()
+  });*/
+
+  fetch("categories.json")
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(listeCat) {
+        console.log("API Cat",listeCat);
+        return listeCat;
+      });
 }

@@ -1,0 +1,14 @@
+.App {
+    width:100%;
+}
+
+.App-header {
+    display: flex;
+    flex:1;
+    font-size: 3vw;
+}
+.App-header a{
+    color:#4CFAFF;
+    font-weight:600;
+    text-decoration:none;
+}

@@ -62,11 +62,16 @@ button:hover {
     height:100%;
     width:105%;
     position: fixed;
-    background-image: url("../Images/logo.svg");
+    background-image: url("../Images/Logo-Blanc-CMJN.png");
     background-repeat: no-repeat;
-    background-position: 95% 00%;
-    background-size: 30%;
+    background-position: 90% 05%;
+    background-size: 20%;
     
+}
+.logoMenu{
+  content: url("../Images/Logo-Blanc-CMJN.png");
+  width:100px;
+  height:100px;
 }
 .YellowCircle{
     z-index: 2;
