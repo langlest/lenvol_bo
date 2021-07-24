@@ -22,6 +22,7 @@ export default function Categories() {
         getCats();
     },[]);
 
+    const newCategorie = () => {};
 
     return (
         <div className="containerCustom">
