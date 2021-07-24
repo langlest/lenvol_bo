@@ -53,7 +53,7 @@ export default function App() {
           <Navbar.Brand className="p-0 m-0" >
             <div className="logoMenu" />
           </Navbar.Brand>
-          <Nav className="me-auto align-bottom">
+          <Nav className="me-auto ">
             <Nav.Link 
               style={niv1 === menu1.path ? styles.navItemActived : styles.navItem}
               as={Link} 
@@ -88,7 +88,7 @@ const styles = {};
 styles.navItem = {
   marginRight:"40px",
   height:"auto",
-  paddingTop:"2rem",
+  paddingTop:"5rem",
   paddingBottom:"0",
   margin:"0",
   color:"rgb(174, 224, 250)",
