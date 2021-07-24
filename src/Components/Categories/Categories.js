@@ -7,6 +7,7 @@ export default function Categories() {
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [cats, setCats] = useState([]);
+    
 
     const getCats = ()=>{
         fetch("categories.json")
