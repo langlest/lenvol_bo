@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Collapse } from "react-collapse";
 import classNames from "classnames";
+import "../../Styles/Categorie.css";
 
 export default function ListeCategories(props){
     const [activeIndexCat, setActiveIndexCat] = useState(null);
@@ -103,34 +104,42 @@ export default function ListeCategories(props){
         }
 
 
-        <Modal show={ModalDelete} onHide={handleClose}>
-            <Modal.Header style={{fontWeight:"bold"}}>Demande de suppression de catégorie</Modal.Header>
-            <Modal.Body>Confirmez la suppression de '{catDelete.nom}'</Modal.Body>
+        <Modal 
+            show={ModalDelete} 
+            onHide={handleClose} 
+            {...props}
+            size="sm">
+            <Modal.Header style={{fontWeight:"bold"}}>Suppression de catégorie</Modal.Header>
+            <Modal.Body>Supprimer : '{catDelete.nom}' ?</Modal.Body>
             <Modal.Footer>
-            <div style={{cursor: "pointer", fontSize:".9em"}} onClick={handleClose}>
-                Annuler
-            </div>
-            <div style={{cursor: "pointer", fontSize:".9em"}} onClick={() => deleteCat(catDelete.id)}>
-                Supprimer
-            </div>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"  onClick={handleClose}>Annuler</button>
+                <button type="button" class="btn btn-primary" onClick={() => deleteCat(catDelete.id)}>Supprimer</button>
             </Modal.Footer>
         </Modal>
 
 
-        <Modal show={ModalEdit} onHide={() => setModalEdit(false)}>
-            <Modal.Header style={{fontWeight:"bold"}}>Modification de catégorie</Modal.Header>
+        <Modal 
+            show={ModalEdit} 
+            dialogClassName="modal-70w" 
+            aria-labelledby="ModalEdit"
+            onHide={() => setModalEdit(false)}>
+            <Modal.Header 
+                id="ModalEdit"
+                style={{fontWeight:"bold"}}>
+                Modification de catégorie</Modal.Header>
             <Modal.Body>
                 <input 
                 name="Nom"
                 type="text" 
+                style={{width:"100%"}}
                 defaultValue={catEdit.nom}
                 onChange={(e) => editNameCat(e.target.value)}
                 />
-                <label>
-                    4-10 ans :
+                <div>
                     <input
                         name=""
                         type="checkbox"
+                        className="checkBoxEditCat"
                         checked={catEdit.age1}
                         onChange={() => setCatEdit({
                             nom:catEdit.nom,
@@ -140,12 +149,15 @@ export default function ListeCategories(props){
                             age4:catEdit.age4
                         })}
                     />
-                </label>
-                <label>
-                    11-15 ans :
+                    <label>
+                        4-10 ans :
+                    </label>
+                </div>
+                <div>
                     <input
                         name=""
                         type="checkbox"
+                        className="checkBoxEditCat"
                         checked={catEdit.age2}
                         onChange={() => setCatEdit({
                             nom:catEdit.nom,
@@ -154,12 +166,15 @@ export default function ListeCategories(props){
                             age3:catEdit.age3,
                             age4:catEdit.age4
                         })} />
-                </label>
-                <label>
-                    15-25 ans :
+                    <label>
+                        11-15 ans :
+                    </label>
+                </div>
+                <div>
                     <input
                         name=""
                         type="checkbox"
+                        className="checkBoxEditCat"
                         checked={catEdit.age3}
                         onChange={() => setCatEdit({
                             nom:catEdit.nom,
@@ -168,12 +183,15 @@ export default function ListeCategories(props){
                             age3:!catEdit.age3,
                             age4:catEdit.age4
                         })} />
-                </label>
-                <label>
-                    Parents / Aidants :
+                    <label>
+                        15-25 ans :
+                    </label>
+                </div>
+                <div>
                     <input
                         name=""
                         type="checkbox"
+                        className="checkBoxEditCat"
                         checked={catEdit.age4}
                         onChange={() => setCatEdit({
                             nom:catEdit.nom,
@@ -182,15 +200,14 @@ export default function ListeCategories(props){
                             age3:catEdit.age3,
                             age4:!catEdit.age4
                         })} />
-                </label>
+                    <label style={{width:"150px"}}>
+                    Parents / Aidants
+                    </label>
+                </div>
             </Modal.Body>
             <Modal.Footer>
-            <div style={{cursor: "pointer", fontSize:".9em"}} onClick={() => setModalEdit(false)}>
-                Annuler
-            </div>
-            <div style={{cursor: "pointer", fontSize:".9em"}} onClick={validEditCat}>
-                Modifier
-            </div>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setModalEdit(false)}>Annuler</button>
+            <button type="button" class="btn btn-primary" onClick={validEditCat}>Enregistrer</button>
             </Modal.Footer>
         </Modal>
     </>

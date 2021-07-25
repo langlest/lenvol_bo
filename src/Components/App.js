@@ -49,11 +49,11 @@ export default function App() {
   return (
     <Router>
       <Navbar style={{backgroundColor:"rgb(36,155,215)"}}  className="p-0 m-0">
-        <Container className="fluid m-0 p-0">
+        <Container className="m-0 p-0 ">
           <Navbar.Brand className="p-0 m-0" >
             <div className="logoMenu" />
           </Navbar.Brand>
-          <Nav className="me-auto ">
+          <Nav className="me-auto">
             <Nav.Link 
               style={niv1 === menu1.path ? styles.navItemActived : styles.navItem}
               as={Link} 
@@ -86,14 +86,11 @@ export default function App() {
 const styles = {};
 
 styles.navItem = {
-  marginRight:"40px",
-  height:"auto",
+  fontSize:"1.3em",
   paddingTop:"5rem",
   paddingBottom:"0",
   margin:"0",
-  color:"rgb(174, 224, 250)",
-  verticalAlign: "bottom"
-  
+  color:"rgb(174, 224, 250)",  
 };
 
 styles.navItemActived = {
