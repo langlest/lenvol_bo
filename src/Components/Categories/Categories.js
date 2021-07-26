@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
 import ListeCategories from "./ListeCategories";
 import { SaveNewCat } from "../../api/APIUtils";
+import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
 import "../../Styles/Categorie.css";
 
 
@@ -30,10 +31,10 @@ export default function Categories() {
 
     const newCategorie = (newItem) => {
         let agesNewItemBdd = [];
-        if(newItem.age1) agesNewItemBdd.push("4-10 ans");
-        if(newItem.age2) agesNewItemBdd.push("11-15 ans");
-        if(newItem.age3) agesNewItemBdd.push("15-25 ans");
-        if(newItem.age4) agesNewItemBdd.push("Parents / Aidants");
+        if(newItem.age1) agesNewItemBdd.push(AGE1);
+        if(newItem.age2) agesNewItemBdd.push(AGE2);
+        if(newItem.age3) agesNewItemBdd.push(AGE3);
+        if(newItem.age4) agesNewItemBdd.push(AGE4);
         console.log(agesNewItemBdd)
         let catBdd = {
             nom:newItem.nom,
@@ -97,7 +98,7 @@ export default function Categories() {
                             })}
                         />
                         <label>
-                            4-10 ans :
+                            {AGE1} :
                         </label>
                     </div>
                     <div>
@@ -110,7 +111,7 @@ export default function Categories() {
                                 age2:e.target.value
                             })} />
                         <label>
-                            11-15 ans :
+                            {AGE2} :
                         </label>
                     </div>
                     <div>
@@ -123,7 +124,7 @@ export default function Categories() {
                                 age3:e.target.value
                             })} />
                         <label>
-                            15-25 ans :
+                            {AGE3} :
                         </label>
                     </div>
                     <div>
@@ -136,7 +137,7 @@ export default function Categories() {
                                 age4:e.target.value
                             })} />
                         <label style={{width:"150px"}}>
-                        Parents / Aidants
+                            {AGE4}
                         </label>
                     </div>
                 </Modal.Body>

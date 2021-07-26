@@ -9,18 +9,16 @@ import {
   Link
 } from "react-router-dom";
 import logo from '../Images/Logo-Blanc-CMJN.png';
-import '../Styles/App.css';
-import Login from './Login/Login';
+import Login from './Login/Login'; 
 import useToken from '../App/useToken';
 import Accueil from "./Accueil";
 import Ressources from "./Ressources/Ressources";
 import Categories from "./Categories/Categories";
+import {MENU1_PATH, MENU1_NAME, MENU2_PATH, MENU2_NAME} from "../App/constantes";
 
 export default function App() {
   const { token, setToken } = useToken();
   const [ MenuSelectAccueil, setMenu ] = useState();
-  const menu1 = {path:'/ressources',name:'Gestion des ressources'};
-  const menu2 = {path:'/categories',name:'Gestion des catégories'};
   const [niv1, setNiv1] = useState(window.location.pathname);
 
   /// Mise en commentaire pour ne pas retomber sur la page de connexion à chaque mise à jour
@@ -30,15 +28,15 @@ export default function App() {
 
   if(token && MenuSelectAccueil==undefined){
     return <Accueil userSelect={setMenu}/>
-  } */
+  }*/
 
   const RedirectionAccueil = () => {
     switch (MenuSelectAccueil) {
-      case "res" :
-        <Redirect to={menu1.path} push />
-        break;
       case "cat" :
-        <Redirect to={menu2.path} push />
+        <Redirect to={MENU1_PATH} push />
+        break;
+      case "res" :
+        <Redirect to={MENU2_PATH} push />
         break;
       default :
         break;
@@ -53,30 +51,31 @@ export default function App() {
           <Navbar.Brand className="p-0 m-0" >
             <div className="logoMenu" />
           </Navbar.Brand>
-          <Nav className="me-auto">
+          <Nav className="me-auto justify-content-center text-center">
             <Nav.Link 
-              style={niv1 === menu1.path ? styles.navItemActived : styles.navItem}
+              style={niv1 === MENU1_PATH ? styles.navItemActived : styles.navItem}
               as={Link} 
-              to={menu1.path} 
-              onClick={() => setNiv1(menu1.path)}
-              >{menu1.name}</Nav.Link>
+              to={MENU1_PATH} 
+              onClick={() => setNiv1(MENU1_PATH)}
+              >{MENU1_NAME}
+            </Nav.Link>
             <Nav.Link 
-              style={niv1 === menu2.path ? styles.navItemActived : styles.navItem}
+              style={niv1 === MENU2_PATH ? styles.navItemActived : styles.navItem}
               as={Link} 
-              to={menu2.path} 
-              onClick={() => setNiv1(menu2.path)}
-              >{menu2.name}
+              to={MENU2_PATH} 
+              onClick={() => setNiv1(MENU2_PATH)}
+              >{MENU2_NAME}
               </Nav.Link>
           </Nav>
         
       </Navbar>
       
       <Switch>
-          <Route exact path={menu1.path} >
-            <Ressources />
-          </Route>
-          <Route path={menu2.path}>
+          <Route exact path={MENU1_PATH} >
             <Categories />
+          </Route>
+          <Route path={MENU2_PATH}>
+            <Ressources />
           </Route>
       </Switch>
     </Router>
@@ -86,11 +85,11 @@ export default function App() {
 const styles = {};
 
 styles.navItem = {
-  fontSize:"1.3em",
-  paddingTop:"5rem",
-  paddingBottom:"0",
-  margin:"0",
-  color:"rgb(174, 224, 250)",  
+  /*fontSize:"1.3em",*/
+  paddingTop:"3rem",
+  /*paddingBottom:"0",
+  margin:"0", */
+  color:"rgb(174, 224, 250)", 
 };
 
 styles.navItemActived = {

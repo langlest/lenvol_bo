@@ -71,8 +71,8 @@ button:hover {
 }
 .logoMenu{
   content: url("../Images/Logo-Blanc-CMJN.png");
-  width:100px;
-  height:100px;
+  width:80px;
+  height:80px;
 }
 .YellowCircle{
     z-index: 2;

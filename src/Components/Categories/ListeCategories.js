@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
 import { Collapse } from "react-collapse";
 import classNames from "classnames";
 
@@ -36,10 +37,10 @@ export default function ListeCategories(props){
                 console.log(item.ages);
                 let catForm = {
                     nom:item.nom,
-                    age1:item.ages.some(a => a.age === "4-10 ans"),
-                    age2:item.ages.some(a => a.age === "11-15 ans"),
-                    age3:item.ages.some(a => a.age === "15-25 ans"),
-                    age4:item.ages.some(a => a.age === "Parents / Aidants"),
+                    age1:item.ages.some(a => a.age === AGE1),
+                    age2:item.ages.some(a => a.age === AGE2),
+                    age3:item.ages.some(a => a.age === AGE3),
+                    age4:item.ages.some(a => a.age === AGE4),
                 };
                 setCatEdit(catForm);
             }
@@ -130,7 +131,7 @@ export default function ListeCategories(props){
                         })}
                     />
                     <label>
-                        4-10 ans :
+                        {AGE1} :
                     </label>
                 </div>
                 <div>
@@ -144,7 +145,7 @@ export default function ListeCategories(props){
                             age2:!catEdit.age2
                         })} />
                     <label>
-                        11-15 ans :
+                        {AGE2} :
                     </label>
                 </div>
                 <div>
@@ -158,7 +159,7 @@ export default function ListeCategories(props){
                             age3:!catEdit.age3
                         })} />
                     <label>
-                        15-25 ans :
+                        {AGE3} :
                     </label>
                 </div>
                 <div>
@@ -172,7 +173,7 @@ export default function ListeCategories(props){
                             age4:!catEdit.age4
                         })} />
                     <label style={{width:"150px"}}>
-                    Parents / Aidants
+                        {AGE4}
                     </label>
                 </div>
             </Modal.Body>

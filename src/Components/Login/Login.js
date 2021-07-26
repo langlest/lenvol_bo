@@ -5,6 +5,7 @@ import * as EmailValidator from "email-validator"; //https://www.digitalocean.co
 
 import PropTypes from 'prop-types';
 import { LoginDev } from "../../api/APIUtils";
+import {ERREUR_PASSWORD, FOOTER_LOGIN, HEADER_LOGIN} from "../../App/constantes";
 import '../../Styles/Login.css';
 
 
@@ -39,7 +40,7 @@ const ValidatedLoginForm = (validateToken) => (
       //!values.email || !EmailValidator.validate(values.email) || 
       const passwordRegex = /(?=.*[0-9])/;
       if (!values.email || !EmailValidator.validate(values.email) || !values.password || values.password.length < 8 || !passwordRegex.test(values.password)) {
-        errors.password = "Un des champs 'Indentifiant' ou 'Mot de passe' n'est pas corrects";
+        errors.password = ERREUR_PASSWORD;
       } 
 
       return errors;
@@ -64,7 +65,7 @@ const ValidatedLoginForm = (validateToken) => (
           <div className="YellowCircle " />
           <div className="form">
               <form style={{textAlign:"center"}} onSubmit={handleSubmit}>
-                <div style={{color:'white',fontWeight: 'lighter'}}>Bienvenue dans l’administration l’ENVOL</div>
+                <div style={{color:'white',fontWeight: 'lighter'}}>{HEADER_LOGIN}</div>
                 <div style={{marginBottom:"5px"}}>
                   <input 
                   id="email"
@@ -97,7 +98,7 @@ const ValidatedLoginForm = (validateToken) => (
                 </div>   
               </form>
               <div className="footer" >
-              <div >Association reconnue d’utilité publique habilitée à recevoir dons, legs et donations</div>
+              <div >{FOOTER_LOGIN}</div>
               </div>
           </div>
         </div>
