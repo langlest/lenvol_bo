@@ -49,7 +49,7 @@ export default function App() {
   return (
     <Router>
       <Navbar style={{backgroundColor:"rgb(36,155,215)"}}  className="p-0 m-0">
-        <Container className="m-0 p-0 ">
+        
           <Navbar.Brand className="p-0 m-0" >
             <div className="logoMenu" />
           </Navbar.Brand>
@@ -68,7 +68,7 @@ export default function App() {
               >{menu2.name}
               </Nav.Link>
           </Nav>
-        </Container>
+        
       </Navbar>
       
       <Switch>
