@@ -52,3 +52,8 @@ export async function listeCategories(){
         return listeCat;
       });
 }
+
+export async function SaveNewCat(newCat){
+    console.log("Enregistrement dans la base du nouvel element ",newCat);
+    return true;
+}

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Collapse } from "react-collapse";
 import classNames from "classnames";
-import "../../Styles/Categorie.css";
+
 
 export default function ListeCategories(props){
     const [activeIndexCat, setActiveIndexCat] = useState(null);
@@ -46,26 +46,7 @@ export default function ListeCategories(props){
         });
         setModalEdit(true);
     };
-    const editCat = (cat) => {
-        console.log("Modifications de la catégorie id:"+cat)
-        setCatEdit({
-            nom:catEdit.nom,
-            age1:!catEdit.age1,
-            age2:catEdit.age2,
-            age3:catEdit.age3,
-            age4:catEdit.age4
-        });
-    }; 
-    const editNameCat = (value) => {
-        console.log("value du nom :",value);
-        setCatEdit({
-            nom:value,
-            age1:catEdit.age1,
-            age2:catEdit.age2,
-            age3:catEdit.age3,
-            age4:catEdit.age4
-        });
-    };
+
     const validEditCat = () => {
         console.log("Enregistrement des modifications de la catégorie :",catEdit);
         setModalEdit(false);
@@ -120,7 +101,6 @@ export default function ListeCategories(props){
 
         <Modal 
             show={ModalEdit} 
-            dialogClassName="modal-70w" 
             aria-labelledby="ModalEdit"
             onHide={() => setModalEdit(false)}>
             <Modal.Header 
@@ -133,7 +113,10 @@ export default function ListeCategories(props){
                 type="text" 
                 style={{width:"100%"}}
                 defaultValue={catEdit.nom}
-                onChange={(e) => editNameCat(e.target.value)}
+                onChange={(e) => setCatEdit({
+                    ...catEdit,
+                    nom:e.target.value
+                })}
                 />
                 <div>
                     <input
@@ -142,11 +125,8 @@ export default function ListeCategories(props){
                         className="checkBoxEditCat"
                         checked={catEdit.age1}
                         onChange={() => setCatEdit({
-                            nom:catEdit.nom,
-                            age1:!catEdit.age1,
-                            age2:catEdit.age2,
-                            age3:catEdit.age3,
-                            age4:catEdit.age4
+                            ...catEdit,
+                            age1:!catEdit.age1
                         })}
                     />
                     <label>
@@ -160,11 +140,8 @@ export default function ListeCategories(props){
                         className="checkBoxEditCat"
                         checked={catEdit.age2}
                         onChange={() => setCatEdit({
-                            nom:catEdit.nom,
-                            age1:catEdit.age1,
-                            age2:!catEdit.age2,
-                            age3:catEdit.age3,
-                            age4:catEdit.age4
+                            ...catEdit,
+                            age2:!catEdit.age2
                         })} />
                     <label>
                         11-15 ans :
@@ -177,11 +154,8 @@ export default function ListeCategories(props){
                         className="checkBoxEditCat"
                         checked={catEdit.age3}
                         onChange={() => setCatEdit({
-                            nom:catEdit.nom,
-                            age1:catEdit.age1,
-                            age2:catEdit.age2,
-                            age3:!catEdit.age3,
-                            age4:catEdit.age4
+                            ...catEdit,
+                            age3:!catEdit.age3
                         })} />
                     <label>
                         15-25 ans :
@@ -194,10 +168,7 @@ export default function ListeCategories(props){
                         className="checkBoxEditCat"
                         checked={catEdit.age4}
                         onChange={() => setCatEdit({
-                            nom:catEdit.nom,
-                            age1:catEdit.age1,
-                            age2:catEdit.age2,
-                            age3:catEdit.age3,
+                            ...catEdit,
                             age4:!catEdit.age4
                         })} />
                     <label style={{width:"150px"}}>

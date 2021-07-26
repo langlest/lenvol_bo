@@ -39,7 +39,7 @@ const ValidatedLoginForm = (validateToken) => (
       //!values.email || !EmailValidator.validate(values.email) || 
       const passwordRegex = /(?=.*[0-9])/;
       if (!values.email || !EmailValidator.validate(values.email) || !values.password || values.password.length < 8 || !passwordRegex.test(values.password)) {
-        errors.password = "Le champs 'Indentifiants' ou 'Mot de passe' n'est pas corrects";
+        errors.password = "Un des champs 'Indentifiant' ou 'Mot de passe' n'est pas corrects";
       } 
 
       return errors;
@@ -65,7 +65,7 @@ const ValidatedLoginForm = (validateToken) => (
           <div className="form">
               <form style={{textAlign:"center"}} onSubmit={handleSubmit}>
                 <div style={{color:'white',fontWeight: 'lighter'}}>Bienvenue dans l’administration l’ENVOL</div>
-                <div>
+                <div style={{marginBottom:"5px"}}>
                   <input 
                   id="email"
                   name="email"
@@ -93,11 +93,11 @@ const ValidatedLoginForm = (validateToken) => (
                   )}
                 </div>
                 <div className="form-item" style={{padding:'5px',marginLeft:'200px'}}>
-                  <button type="submit" disabled={isSubmitting}>Connexion</button>
+                  <button type="submit" class="btn btn-primary" disabled={isSubmitting}>Connexion</button>
                 </div>   
               </form>
               <div className="footer" >
-              <div style={{width:"480px"}}>Association reconnue d’utilité publique habilitée à recevoir dons, legs et donations</div>
+              <div >Association reconnue d’utilité publique habilitée à recevoir dons, legs et donations</div>
               </div>
           </div>
         </div>

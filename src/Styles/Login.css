@@ -35,11 +35,12 @@ input.error {
 }
 
 .input-feedback {
-  color: white;
-  background-color: red;
-  margin-top: 2px;
+  color:black;
+  /*color: white;
+  background-color: red;*/
+  margin-top: 5px;
   margin-left: 25px;
-  font-size: .8em;
+  font-size: .7em;
   width:85%;
   justify-content: center;
     align-items: center;
@@ -99,7 +100,7 @@ button:hover {
     bottom:5%;
     color:white;
     font-weight: lighter; 
-    font-size:.9em;
+    font-size:.7em;
 }
   /* Medium screens */
 @media all and (max-width: 800px) {
