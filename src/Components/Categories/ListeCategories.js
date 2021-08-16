@@ -4,23 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
 import { Collapse } from "react-collapse";
-import classNames from "classnames";
 
 
 export default function ListeCategories(props){
     const [activeIndexCat, setActiveIndexCat] = useState(null);
-    const [show, setShow] = useState(false);
     const [ModalDelete, setModalDelete] = useState(false);
     const [catDelete, setCatDelete] = useState({nom:"",id:null});
     const [ModalEdit, setModalEdit] = useState(false);
     const [catEdit, setCatEdit] = useState({nom:"",id:null,ages:[]});
 
     const handleClose = () => setModalDelete(false);
-    const handleShow = () => setModalDelete(true);
 
     const editStateElement = (id) => {};   
     const deleteConfirm = (id) => {
-        props.cats.map((item) => {
+        props.cats.forEach(item =>{
             if(item.id === id){
                 setCatDelete(item);
             }
@@ -28,11 +25,11 @@ export default function ListeCategories(props){
         setModalDelete(true);
     };
     const deleteCat = (id) => {
-        console.log("Suppression confirmée de la catégorie id:"+id)
+        console.log("Suppression confirmée de la catégorie id:"+id);
         handleClose();
     };   
     const editCatDemand = (id) => {
-        props.cats.map((item) => {
+        props.cats.forEach((item) => {
             if(item.id === id){
                 console.log(item.ages);
                 let catForm = {
@@ -58,7 +55,7 @@ export default function ListeCategories(props){
     return (
     <>
         {props.cats.map((categorie,indexCat) => (
-            <div className="row ligneCat">
+            <div id={indexCat} className="row ligneCat">
                 <div className="col-10 libelleCat">
                     <div onClick={event => setActiveIndexCat(
                             activeIndexCat === indexCat ? null : indexCat
@@ -66,20 +63,22 @@ export default function ListeCategories(props){
                     </div>
                     <Collapse isOpened={activeIndexCat === indexCat}>
                         <div className={{ show: activeIndexCat === indexCat, hide: activeIndexCat !== indexCat }}>
-                            <a><ul className="ElementsCat">
+                            <ul className="ElementsCat">
                                     {categorie.ages.map((CatAge,indexAge)=> 
                                         <li key={indexAge}>{CatAge.age}</li>
                                     )}
                                 </ul>
-                            </a>
+                            
                         </div>
                     </Collapse>
                 </div>
-                <div style={{cursor: "pointer"}} className="col-1 d-flex justify-content-center text-center" onClick={() => editCatDemand(categorie.id)}>
-                    <FontAwesomeIcon icon={faPen} />
-                </div>
-                <div style={{cursor: "pointer"}} className="col-1 d-flex justify-content-center text-center cursor-pointer" onClick={() => deleteConfirm(categorie.id)}>
-                    <FontAwesomeIcon icon={faTrashAlt} />
+                <div className="col-2 d-flex justify-content-center text-center">
+                    <div style={{cursor: "pointer", paddingRight:"20px"}}  onClick={() => editCatDemand(categorie.id)}>
+                        <FontAwesomeIcon icon={faPen} />
+                    </div>
+                    <div style={{cursor: "pointer"}}  onClick={() => deleteConfirm(categorie.id)}>
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                    </div>
                 </div>
             </div>
         ))

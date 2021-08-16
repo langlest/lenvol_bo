@@ -15,7 +15,7 @@ export default function Categories() {
     
 
     const getCats = ()=>{
-        fetch("categories.json")
+        fetch("categories.json") // Fichier statique de prod placé dans public
             .then(function(response){
                 return response.json();
             })
@@ -35,7 +35,7 @@ export default function Categories() {
         if(newItem.age2) agesNewItemBdd.push(AGE2);
         if(newItem.age3) agesNewItemBdd.push(AGE3);
         if(newItem.age4) agesNewItemBdd.push(AGE4);
-        console.log(agesNewItemBdd)
+        console.log(agesNewItemBdd);
         let catBdd = {
             nom:newItem.nom,
             ages:agesNewItemBdd
@@ -50,19 +50,11 @@ export default function Categories() {
     return (
         <>
             <div className="containerCustom">
-                <div className="row ">
-                    <div className="col-10 ">
-                        <button 
-                            className="boutonAjout" 
-                            onClick = {() => setModalCreate(true)}
-                            >+ Ajout d'une nouvelle categorie</button>
-                    </div>
-                    <div className="intituleBtn col-1 d-flex justify-content-center text-center ">
-                        <span>Modifier</span>
-                    </div>
-                    <div className="intituleBtn col-1 d-flex justify-content-center text-center ">
-                        <span>Supprimer</span>
-                    </div>
+                <div className="col-10 ">
+                    <button 
+                        className="boutonAjout" 
+                        onClick = {() => setModalCreate(true)}
+                        >+ Ajout d'une nouvelle categorie</button>
                 </div>
                 <div>
                     <ListeCategories cats={cats}/>

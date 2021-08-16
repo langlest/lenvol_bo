@@ -48,7 +48,7 @@ export default function App() {
     <Router>
       <Navbar style={{backgroundColor:"rgb(36,155,215)"}}  className="p-0 m-0">
         
-          <Navbar.Brand className="p-0 m-0" >
+          <Navbar.Brand className="p-0 m-2" >
             <div className="logoMenu" />
           </Navbar.Brand>
           <Nav className="me-auto justify-content-center text-center">
@@ -86,7 +86,7 @@ const styles = {};
 
 styles.navItem = {
   /*fontSize:"1.3em",*/
-  paddingTop:"3rem",
+  paddingTop:"4rem",
   /*paddingBottom:"0",
   margin:"0", */
   color:"rgb(174, 224, 250)", 

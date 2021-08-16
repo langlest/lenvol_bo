@@ -1,13 +1,18 @@
 import React from "react";
+import "../../Styles/Categorie.css";
+import "../../Styles/Ressources.css";
 
 export default function Ressources(){
     return(
-        <div style={styles.content}>Ressources</div>
+        // Section filtre
+        <div className="containerCustom">Ressources</div>
+
+        // Section liste ressources
     );
 }
 
 const styles = {};
 
 styles.content = {
-    margin:"10px"
+    
 }
