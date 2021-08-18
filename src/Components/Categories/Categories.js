@@ -7,8 +7,6 @@ import "../../Styles/Categorie.css";
 
 
 export default function Categories() {
-    const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
     const [cats, setCats] = useState([]);
     const [ModalCreate, setModalCreate] = useState(false);
     const [catCreate, setCatCreate] = useState({nom:"",id:null,ages:[]});
@@ -20,6 +18,7 @@ export default function Categories() {
                 return response.json();
             })
             .then(function(listeCat) {
+                console.log(listeCat)
                 setCats(listeCat);
             });
     };
@@ -35,7 +34,7 @@ export default function Categories() {
         if(newItem.age2) agesNewItemBdd.push(AGE2);
         if(newItem.age3) agesNewItemBdd.push(AGE3);
         if(newItem.age4) agesNewItemBdd.push(AGE4);
-        console.log(agesNewItemBdd);
+
         let catBdd = {
             nom:newItem.nom,
             ages:agesNewItemBdd
@@ -50,7 +49,7 @@ export default function Categories() {
     return (
         <>
             <div className="containerCustom">
-                <div className="col-10 ">
+                <div>
                     <button 
                         className="boutonAjout" 
                         onClick = {() => setModalCreate(true)}
@@ -71,13 +70,13 @@ export default function Categories() {
                     Ajout d'une catégorie</Modal.Header>
                 <Modal.Body>
                     <input 
-                    name="Nom"
-                    type="text" 
-                    style={{width:"100%"}}
-                    onChange={(e) => setCatCreate({
-                        ...catCreate,
-                        nom:e.target.value
-                    })}
+                        name="Nom"
+                        type="text" 
+                        style={{width:"100%"}}
+                        onChange={(e) => setCatCreate({
+                            ...catCreate,
+                            nom:e.target.value
+                        })}
                     />
                     <div>
                         <input

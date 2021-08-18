@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +14,7 @@ export default function ListeCategories(props){
     const [catEdit, setCatEdit] = useState({nom:"",id:null,ages:[]});
 
     const handleClose = () => setModalDelete(false);
-
-    const editStateElement = (id) => {};   
+ 
     const deleteConfirm = (id) => {
         props.cats.forEach(item =>{
             if(item.id === id){
@@ -72,13 +71,15 @@ export default function ListeCategories(props){
                         </div>
                     </Collapse>
                 </div>
-                <div className="col-2 d-flex justify-content-center text-center">
+                <div className="col-2 d-flex  text-center">
                     <div style={{cursor: "pointer", paddingRight:"20px"}}  onClick={() => editCatDemand(categorie.id)}>
                         <FontAwesomeIcon icon={faPen} />
                     </div>
+                    { categorie.supprimable &&
                     <div style={{cursor: "pointer"}}  onClick={() => deleteConfirm(categorie.id)}>
                         <FontAwesomeIcon icon={faTrashAlt} />
                     </div>
+                    }   
                 </div>
             </div>
         ))

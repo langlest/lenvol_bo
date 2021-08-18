@@ -10,7 +10,7 @@
                 "age":"Parents / Aidants"
             }
         ],
-        "supprimable":true
+        "supprimable":false
     },
     {
         "id":"2",
@@ -62,7 +62,7 @@
                 "age":"Parents / Aidants"
             }
         ],
-        "supprimable":true
+        "supprimable":false
     },
     {
         "id":"6",

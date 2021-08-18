@@ -54,6 +54,11 @@ export async function listeCategories(){
 }
 
 export async function SaveNewCat(newCat){
-    console.log("Enregistrement dans la base du nouvel element ",newCat);
+    console.log("Enregistrement dans la base du nouvel element 'categorie' ",newCat);
     return true;
+}
+
+export async function SaveNewRes(newRes){
+  console.log("Enregistrement dans la base du nouvel element 'ressource' ",newRes);
+  return true;
 }

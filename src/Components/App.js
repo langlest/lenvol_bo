@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { Container, Col, Row,Navbar, Nav, Image} from 'react-bootstrap';
+import React, { useState } from "react";
+import { Navbar, Nav} from 'react-bootstrap';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +7,6 @@ import {
   Redirect,
   Link
 } from "react-router-dom";
-import logo from '../Images/Logo-Blanc-CMJN.png';
 import Login from './Login/Login'; 
 import useToken from '../App/useToken';
 import Accueil from "./Accueil";
@@ -67,7 +65,6 @@ export default function App() {
               >{MENU2_NAME}
               </Nav.Link>
           </Nav>
-        
       </Navbar>
       
       <Switch>
