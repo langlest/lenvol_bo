@@ -72,7 +72,7 @@ export default function App() {
             <Categories />
           </Route>
           <Route path={MENU2_PATH}>
-            <Ressources />
+              <Ressources />
           </Route>
       </Switch>
     </Router>

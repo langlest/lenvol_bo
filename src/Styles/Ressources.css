@@ -64,6 +64,13 @@
 .ligneRes{
     padding-left:10px;
 }
+.ElementsRes{
+    font-size: .9em;
+    list-style: none;
+    line-height: 1.2;
+    color :rgb(70, 70, 70);
+    margin-bottom:0;
+}
 
 /* Modal de creation de ressource*/
 .field_resCreate{

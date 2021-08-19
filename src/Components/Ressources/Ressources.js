@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import {Row, Col, DropdownButton, Form} from "react-bootstrap";
 import { SaveNewRes } from "../../api/APIUtils";
-import {AGE1, AGE2, AGE3, AGE4, AGES} from "../../App/constantes";
+import {AGES} from "../../App/constantes";
 import ListeRessources from "./ListeRessources";
 import "../../Styles/Categorie.css";
 import "../../Styles/Ressources.css";
@@ -27,7 +27,10 @@ export default function Ressources(){
     const [resCreate, setResCreate] = useState(ressourceModel);
     const [descriptifInput, setDescriptifInput] = useState(false);
     let newLien = null;
-    
+    let lienInput = React.createRef();
+    const resetLienInput = () => {
+        lienInput.current.value = "";
+    };
 
     /// Enregistrement Nouvelle ressource
     const newRessource = () => {
@@ -145,7 +148,7 @@ export default function Ressources(){
                     >+ Ajout d'une nouvelle ressource</button>
             </div>
             <div>
-                    <ListeRessources filtre={filtreRessources}/>
+                    <ListeRessources filtre={filtreRessources} categories={cats}/>
             </div>
         </div>
 
@@ -174,9 +177,6 @@ export default function Ressources(){
                             <option value={categorie.nom}>{categorie.nom}</option>
                         )}
                     </select>
-                    
-                
-                    
                 </div>
                 <div className="d-flex mb-2">
                     <label className="labelFieldModalRes w-25">Nom </label>
@@ -245,31 +245,35 @@ export default function Ressources(){
                     )
                 }
                 <div className="d-flex mb-3">
-                    <label className="labelFieldModalRes w-25 justify-content-start">Liens </label>
+                    <label className="labelFieldModalRes justify-content-start"
+                    style={{width:"91px"}}>Liens </label>
                     <input 
                         name="lien"
                         type="text" 
+                        ref={lienInput}
+                        disabled={descriptifInput ? "disabled" : ""}
                         placeholder="Lien url"
                         onChange={(e) => {
-                            newLien = {url:e.target.value,descriptif:""};
+                            newLien = e.target.value;
                         }}
                         className="field_resCreate "
-                        style={{width:"380px"}}
+                        style={{width:"305px"}}
                     />
+                    {!descriptifInput &&
                     <div className="btnTextModalRes" 
                         style={{cursor:"pointer",marginLeft:"6px"}}
                         onClick={() => {
-                            if(newLien !== null){
-                                const ar = resCreate.liens;
-                                ar.push(newLien)
-                                setResCreate({
-                                    ...resCreate,
-                                    liens:ar});
-                                setDescriptifInput(true);
-                            }
+                            const ar = resCreate.liens;
+                            ar.push({url:newLien})
+                            setResCreate({
+                                ...resCreate,
+                                liens:ar
+                            });
+                            setDescriptifInput(true)
                         }}
                         >Ajouter
                     </div>
+                    }
                 </div>
                 {descriptifInput &&
                     <div className="d-flex mb-2">
@@ -281,20 +285,22 @@ export default function Ressources(){
                             className="field_resCreate"
                             style={{width:"380px"}}
                             onChange={(e) => {
-                                newLien = {descriptif:e.target.value}
+                                newLien = e.target.value
                             }}
                         />
                         <div className="btnTextModalRes" 
                             style={{cursor:"pointer",marginLeft:"6px"}}
                             onClick={() => {
-                                let arLiens = resCreate.liens
-                                arLiens[resCreate.liens.length-1].descriptif = newLien.descriptif
+                                const ar = resCreate.liens;
+                                let lastLink = ar[ar.length-1];
+                                lastLink.descriptif = newLien;
                                 setResCreate({
                                     ...resCreate,
-                                    liens:arLiens
+                                    liens:ar
                                 });
                                 newLien = null;
                                 setDescriptifInput(false);
+                                resetLienInput();
                             }}
                             >Ajouter
                         </div>
@@ -311,12 +317,13 @@ export default function Ressources(){
                                 }
                                 
                             </Col>
-                            <Col md={1} xs={1} lg={1} className="" style={{fontSize:".9em",cursor: "pointer"}}  onClick={()=> {
+                            <Col md={1} xs={1} lg={1} className="" style={{fontSize:".9em",cursor: "pointer",paddingTop:"4px"}}  onClick={()=> {
                                 const ar = resCreate.liens;
                                 ar.splice(index,1);
                                 setResCreate({
                                     ...resCreate,
                                     liens:ar});
+                                setDescriptifInput(false);
                                 }}>
                                 <FontAwesomeIcon icon={faTrashAlt} />
                             </Col>
@@ -325,7 +332,7 @@ export default function Ressources(){
                 }
             </Modal.Body>
             <Modal.Footer>
-            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => {setModalCreate(false); setResCreate(ressourceModel)}}>Annuler</button>
+            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => {setModalCreate(false); setResCreate(ressourceModel);newLien=null}}>Annuler</button>
             <button type="button" className="btn btn-primary" onClick={() => newRessource()}>Enregistrer</button>
             </Modal.Footer>
         </Modal>

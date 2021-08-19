@@ -29,7 +29,7 @@ export async function LoginDev(username,password){
 
 /////////////////////////////////////////
 ////////  categorie
-export async function listeCategories(){
+export async function ListeCategoriesServer(){
     
   /*const routeApi = 'categories';
   const uriApi = domainPath+routeApi;
@@ -46,10 +46,6 @@ export async function listeCategories(){
   fetch("categories.json")
       .then(function(response){
         return response.json();
-      })
-      .then(function(listeCat) {
-        console.log("API Cat",listeCat);
-        return listeCat;
       });
 }
 
@@ -57,8 +53,35 @@ export async function SaveNewCat(newCat){
     console.log("Enregistrement dans la base du nouvel element 'categorie' ",newCat);
     return true;
 }
+export async function DeleteCategorie(id){
+  console.log("Suppression de la categorie "+id+" de la base");
+  return true;
+}
 
+/////////////////////////////////////////
+////////  categorie
+export async function ListeRessourcesServer(){
+    
+  /*const routeApi = 'ressources';
+  const uriApi = domainPath+routeApi;
+  fetch(uriApi, {
+  headers: {
+    'Content-Type': 'application/json'
+  }
+  })
+  .then(data => {
+    return data.json()
+  });*/
+
+  fetch("ressources.json")
+      .then(response => response.json());
+}
 export async function SaveNewRes(newRes){
   console.log("Enregistrement dans la base du nouvel element 'ressource' ",newRes);
+  return true;
+}
+
+export async function DeleteRessource(id){
+  console.log("Suppression de la ressource "+id+" de la base");
   return true;
 }

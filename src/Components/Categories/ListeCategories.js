@@ -3,14 +3,15 @@ import Modal from 'react-bootstrap/Modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
+import { DeleteCategorie, ListeCategoriesServer } from "../../api/APIUtils";
 import { Collapse } from "react-collapse";
 
 
 export default function ListeCategories(props){
     const [activeIndexCat, setActiveIndexCat] = useState(null);
-    const [ModalDelete, setModalDelete] = useState(false);
     const [catDelete, setCatDelete] = useState({nom:"",id:null});
     const [ModalEdit, setModalEdit] = useState(false);
+    const [ModalDelete, setModalDelete] = useState(false);
     const [catEdit, setCatEdit] = useState({nom:"",id:null,ages:[]});
 
     const handleClose = () => setModalDelete(false);
@@ -25,6 +26,15 @@ export default function ListeCategories(props){
     };
     const deleteCat = (id) => {
         console.log("Suppression confirmée de la catégorie id:"+id);
+        /// suppression de la liste
+        props.cats.forEach((item,i) =>{
+            if(item.id === id){
+                props.cats.splice(i,1)
+                setCatDelete(item);
+            }
+        });
+        /// Suppression en base
+        DeleteCategorie(id);
         handleClose();
     };   
     const editCatDemand = (id) => {

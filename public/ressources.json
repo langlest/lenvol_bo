@@ -3,7 +3,7 @@
         "id":1,
         "nom":"ressource 1",
         "categorie":"Tutos bien-être et sport",
-        "video":"",
+        "video":"video.mpg",
         "documents":[
             "charte.pdf"
         ],
@@ -18,12 +18,25 @@
         "id":2,
         "nom":"ressource 2",
         "categorie":"Ateliers cuisine",
-        "video":"",
+        "video":"ressource1.mp4",
         "documents":[],
         "liens":[
             {
                 "url":"http://www.cuisinefacile.com",
                 "descriptif":"Nos publications"
+            }
+        ]
+    },
+    {
+        "id":3,
+        "nom":"Y a plus qu'à",
+        "categorie":"Activité musique",
+        "video":"video.mpg",
+        "documents":[],
+        "liens":[
+            {
+                "url":"http://www.yaplusqua.com",
+                "descriptif":"réesau des yaplusqua"
             }
         ]
     }
