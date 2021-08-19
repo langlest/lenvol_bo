@@ -4,91 +4,17 @@ import { faSearch, faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
 import {Row, Col, DropdownButton, Form} from "react-bootstrap";
 import { SaveNewRes } from "../../api/APIUtils";
-import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
+import {AGE1, AGE2, AGE3, AGE4, AGES} from "../../App/constantes";
+import ListeRessources from "./ListeRessources";
 import "../../Styles/Categorie.css";
 import "../../Styles/Ressources.css";
 
-function ListeRessources(){
-    const editResDemand = () => {
 
-    };
-    const deleteConfirm = () => {
 
-    };
-    return(
-        <div  className="row ligneRes">
-                <div className="col-10 libelleRes">
-                    nom ressources
-                </div> 
-                <div className="col-2 d-flex text-center">
-                    <div style={{cursor: "pointer", paddingRight:"20px"}}  onClick={() => editResDemand()}>
-                        <FontAwesomeIcon icon={faPen} />
-                    </div>
-                    <div style={{cursor: "pointer"}}  onClick={() => deleteConfirm()}>
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                    </div>
-                </div>
-            </div>
-    )
-
-}
-
-function Ressources_FiltreCatAge(){
-    
-    return(
-        <DropdownButton 
-            title="Categorie Age"
-            variant="btn_age">
-            <input
-                name="age"
-                type="checkbox"
-                className="checkAge"
-            />
-            <label>{AGE1}</label><br />
-            <input
-                name="age"
-                type="checkbox"
-                className="checkAge"
-            />
-            <label>{AGE2}</label><br />
-            <input
-                name="age"
-                type="checkbox"
-                className="checkAge"
-            />
-            <label>{AGE3}</label><br />
-            <input
-                name="age"
-                type="checkbox"
-                className="checkAge"
-            />
-            <label>{AGE4}</label>
-        </DropdownButton>
-    )
-}
-
-function Ressources_FiltreCatNom(props){
-
-    return(
-            <DropdownButton 
-                title="Categorie Nom"
-                variant="btn_age">
-                {props.cats.map((categorie,indexCat) => (
-                    <div className="widthAuto">
-                        <input as="checkbox"
-                            name={categorie.id}
-                            type="checkbox"
-                            className="checkAge"
-                        />
-                        <label>{categorie.nom}</label><br />
-                    </div>
-                ))}
-            </DropdownButton>
-    )
-}
 
 
 export default function Ressources(){
+    
     //////// Modal popup creation ressource
     const ressourceModel = {
         nom:"",
@@ -99,9 +25,11 @@ export default function Ressources(){
     }
     const [ModalCreate, setModalCreate] = useState(false);
     const [resCreate, setResCreate] = useState(ressourceModel);
-    const [descriptifInput,setDescriptifInput] = useState(false);
+    const [descriptifInput, setDescriptifInput] = useState(false);
     let newLien = null;
     
+
+    /// Enregistrement Nouvelle ressource
     const newRessource = () => {
         let ressourceBdd = resCreate;
         setResCreate(ressourceModel);     
@@ -112,28 +40,40 @@ export default function Ressources(){
     };
 
     //////// Filtre d'affichage des ressources 
-    const [recherche, setRecherche] = useState();
-    const [filtreAge, setFiltreAge] = useState();
-    const filtreMot = () => {
-        console.log("filtre sur ",recherche)
-    }
+    const [filtreRessources, setFiltreRessources] = useState({
+        ages:[false,false,false,false],
+        categorie:"",
+        mots:""
+    });
+    let filtre = filtreRessources;
 
-    const [cats, setCats] = useState([]);
-
-    const getCats = () =>{
-        fetch("categories.json") // Fichier statique de prod placé dans public
-            .then(function(response){
-                return response.json();
-            })
-            .then(function(listeCat) {
-                setCats(listeCat);
-            });
+    /// Filtre Age
+    const ChangeAgeFilter = (index,value) => {
+        filtre.ages.splice(index,1,value);
+        setFiltreRessources(filtre);
     };
 
+    /// Filtre Catégorie
+    const ChangeCatFilter = (index,value) => {
+        filtre.categorie.splice(index,1,value);
+        setFiltreRessources(filtre);
+    }
     
-    useEffect(()=>{
-        getCats();
-    },[]);
+    /// Filtre Mot
+    const FiltreMot = (mots) => {
+        filtre.mots = mots;
+        setFiltreRessources(filtre);
+        console.log(filtreRessources);
+    }
+
+    //////// Chargement des catégories (filtre)
+    const [cats, setCats] = useState([]);
+
+    useEffect(() => {
+        fetch("categories.json") // Fichier statique de prod placé dans public
+            .then(resp => resp.json())
+            .then(data => setCats(data));
+    }, []);
 
     return(
         <>
@@ -146,15 +86,50 @@ export default function Ressources(){
                         type="text"
                         className="inputRecherche"
                         placeholder="Recherche"
-                        onChange={(e) => setRecherche(e.target.value)} />
-                        <FontAwesomeIcon 
-                            className="iconRecherche" 
-                            icon={faSearch} 
-                            onClick={filtreMot}/>
+                        onChange={(e) => FiltreMot(e.target.value)}
+                    />
+                    <FontAwesomeIcon 
+                        className="iconRecherche" 
+                        icon={faSearch} 
+                        />
                 </div>
                 <div className="filtres d-flex">
-                    <Ressources_FiltreCatAge filtre=""/>
-                    <Ressources_FiltreCatNom cats={cats}/>
+                    <DropdownButton 
+                        title="Categorie Age"
+                        variant="btn_age">
+                        {AGES.map((age, index) => {
+                            return(
+                            <>
+                            <input
+                                name="age"
+                                type="checkbox"
+                                className="checkAge"
+                                onChange={((e) => {
+                                    ChangeAgeFilter(index,e.target.checked)
+                                })}
+                            />
+                            <label>{age}</label><br />
+                            </>
+                            )
+                        })}
+                    </DropdownButton>
+                    <DropdownButton 
+                        title="Categorie Nom"
+                        variant="btn_age">
+                        {cats.map((categorie,index) => (
+                            <div className="widthAuto">
+                                <input as="checkbox"
+                                    name={categorie.id}
+                                    type="checkbox"
+                                    className="checkAge"
+                                    onChange={((e) => {
+                                    ChangeCatFilter(index,e.target.checked)
+                                })}
+                                />
+                                <label>{categorie.nom}</label><br />
+                            </div>
+                        ))}
+                    </DropdownButton>
                 </div>
             </div>
         </div>
@@ -170,7 +145,7 @@ export default function Ressources(){
                     >+ Ajout d'une nouvelle ressource</button>
             </div>
             <div>
-                    <ListeRessources />
+                    <ListeRessources filtre={filtreRessources}/>
             </div>
         </div>
 

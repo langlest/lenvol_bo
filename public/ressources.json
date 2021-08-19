@@ -1,0 +1,30 @@
+[
+    {
+        "id":1,
+        "nom":"ressource 1",
+        "categorie":"Tutos bien-être et sport",
+        "video":"",
+        "documents":[
+            "charte.pdf"
+        ],
+        "liens":[
+            {
+                "url":"http://www.ressources.com",
+                "descriptif":"Toutes les ressoures utiles"
+            }
+        ]
+    },
+    {
+        "id":2,
+        "nom":"ressource 2",
+        "categorie":"Ateliers cuisine",
+        "video":"",
+        "documents":[],
+        "liens":[
+            {
+                "url":"http://www.cuisinefacile.com",
+                "descriptif":"Nos publications"
+            }
+        ]
+    }
+]

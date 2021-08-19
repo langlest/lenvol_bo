@@ -11,22 +11,12 @@ export default function Categories() {
     const [ModalCreate, setModalCreate] = useState(false);
     const [catCreate, setCatCreate] = useState({nom:"",id:null,ages:[]});
     
-
-    const getCats = ()=>{
+    // Chargement des catégories
+    useEffect(() => {
         fetch("categories.json") // Fichier statique de prod placé dans public
-            .then(function(response){
-                return response.json();
-            })
-            .then(function(listeCat) {
-                console.log(listeCat)
-                setCats(listeCat);
-            });
-    };
-
-    useEffect(()=>{
-        getCats();
-    },[]);
-
+            .then(resp => resp.json())
+            .then(data => setCats(data))
+    }, [])
 
     const newCategorie = (newItem) => {
         let agesNewItemBdd = [];
