@@ -1,4 +1,7 @@
-[
+import { createSlice } from '@reduxjs/toolkit';
+
+
+const initialState : Array = [
     {
         "id":"1",
         "nom":"Tutos bien-être et sport",
@@ -101,3 +104,43 @@
         "supprimable":true
     }
 ]
+
+
+export const categoriesSlice = createSlice({
+    name: 'categories',
+    initialState,
+    reducers: {
+        init(state) {
+            const categorieApi = fetch("ressources.json")
+                .then(response => response.json())
+                .then(data => {
+                  state.value = categorieApi;
+                });
+          },
+          add(state, action) {
+            console.log("[categoriesReducer] add ");
+            state.push(action.payload);
+          },
+          edit(state, action){
+            console.log("[categoriesReducer] edit");
+            state.map((cat,i) => {
+              if(cat.id === action.payload.id){
+                state.splice(i,1,action.payload);
+                return true;
+              }
+            });
+          },
+          del(state, action){
+            console.log("[categoriesReducer] delete ",action.payload);
+            state.map((cat,i) => {
+              if(cat.id === action.payload){
+                state.splice(i,1);
+                return true;
+              }
+            });
+          }
+    }
+})
+
+export const { init, add, edit, del } = categoriesSlice.actions;
+export default categoriesSlice.reducer;

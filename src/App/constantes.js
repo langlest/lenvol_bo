@@ -10,4 +10,4 @@ export const AGE1 = "4-10 ans";
 export const AGE2 = "11-15 ans";
 export const AGE3 = "15-25 ans";
 export const AGE4 = "Parents / Aidants";
-export const AGES = [AGE1,AGE2,AGE3,AGE4];
+export const AGES = [AGE1, AGE2, AGE3, AGE4];
