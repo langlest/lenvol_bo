@@ -1,4 +1,6 @@
 const domainPath = 'http://localhost:8080/';
+const localPath = 'http://localhost:3000/';
+const localFolder = "C:/Users/frederic.langlest/source/repos/CoeurUmanis/Lenvol/lenvol_bo/public/";
 
 /////////////////////////////////
 ////////  API 
@@ -17,7 +19,7 @@ export async function LoginApi(username,password){
         password
       })
   })
-    .then(data => data.json())
+    .then(data => data.json());
 }
 
 ////////  connexion locale sans serveur
@@ -57,9 +59,12 @@ export async function DeleteCategorie(id){
   console.log("Suppression de la categorie "+id+" de la base");
   return true;
 }
-
+export async function EditCategorie(item){
+  console.log("Mise à jour de la categorie "+item.id+" en base");
+  return true;
+}
 /////////////////////////////////////////
-////////  categorie
+////////  Ressources
 export async function ListeRessourcesServer(){
     
   /*const routeApi = 'ressources';
@@ -77,8 +82,40 @@ export async function ListeRessourcesServer(){
       .then(response => response.json());
 }
 export async function SaveNewRes(newRes){
-  console.log("Enregistrement dans la base du nouvel element 'ressource' ",newRes);
-  return true;
+  console.log("[SaveNewRes]",newRes);
+  const formData = new FormData();
+
+    /* if(newRes.video.length > 0)
+		  formData.append('File', newRes.video.File.name);
+    
+    if(newRes.documents.length > 0){
+      newRes.documents.forEach((document) => formData.append('File', document));
+    }
+
+    // Upload 
+    if
+		await fetch(
+			{
+				method: 'POST',
+        headers :{
+          'Accept': 'application.json',
+          'Content-Type': 'multipart/form-data'
+        },
+				body: formData,
+			}
+		)
+			.then((response) => {
+        if(response.ok){ 
+            return true;
+        } else {
+          console.log('[API] erreur réponse du réseau');
+          return false;
+        }}
+      )
+			.catch((error) => {
+				console.error('Error:', error);
+			}); */
+      return true;
 }
 
 export async function DeleteRessource(id){

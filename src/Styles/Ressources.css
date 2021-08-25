@@ -71,6 +71,9 @@
     color :rgb(70, 70, 70);
     margin-bottom:0;
 }
+.libelleRes ul{
+    padding-left:15px;
+}
 
 /* Modal de creation de ressource*/
 .field_resCreate{
@@ -96,4 +99,11 @@
 }
 .btnTextModalRes:hover{
     color:black;
+};
+/* Elements ressources */
+.btnPlay:hover{
+    cursor:pointer;
+}
+.widthProp{
+    width:100px;
 }

@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { connect } from 'react-redux';
+import { init, add, edit, del}  from "../../reducers/ressourcesReducer";
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-bootstrap/Modal';
@@ -14,9 +17,23 @@ import "../../Styles/Ressources.css";
 
 
 export default function Ressources(){
+    const dispatch = useDispatch();
     
+    ///////// Charges et gestion modifs component child des ressources
+    let ressources = useSelector(state => state.ressources);
+    
+    // Ajout etat 'show' (état collapse éléments)
+    let  initCollapse = [];
+    for(let i=0;i<=ressources.length-1;i++){
+        initCollapse.push(false);
+    };
+
+    let ressourcesCollapse = useDispatch(init(initCollapse));
+
+    //////////////////////////////////////////
     //////// Modal popup creation ressource
     const ressourceModel = {
+        id:null,
         nom:"",
         categorie:"",
         video:"",
@@ -33,13 +50,33 @@ export default function Ressources(){
     };
 
     /// Enregistrement Nouvelle ressource
+    const [messageNom,setMessageNom] = useState("");
+    const [messageCat,setMessageCat] = useState("");
+    let inputOk = true;
     const newRessource = () => {
-        let ressourceBdd = resCreate;
-        setResCreate(ressourceModel);     
-        
-        //Méthode API d'envoi (à terminer)
-        SaveNewRes(ressourceBdd)
-            .then(setModalCreate(false));
+        // Verification des input obligatoires
+        if(resCreate.nom === ""){
+            inputOk = false;
+            setMessageNom(messageNom.concat("Nom obligatoire."));
+        }
+        if(resCreate.categorie === ""){
+            inputOk = false;
+            setMessageCat(messageCat.concat(" Catégorie obligatoire."));
+        }
+        // Enregistrement
+        if(inputOk){
+            const ids = ressources.map((res) => res.id).sort();
+            const newId = ids.[ids.length - 1]+1;
+            let ressourceBdd = resCreate;
+            ressourceBdd.id = newId;
+            setResCreate(ressourceModel);   
+            
+            //Méthode API d'envoi (à terminer)
+            SaveNewRes(ressourceBdd)
+                .then(setModalCreate(false));
+            dispatch(add(ressourceBdd));
+        }
+            
     };
 
     //////// Filtre d'affichage des ressources 
@@ -65,7 +102,7 @@ export default function Ressources(){
     /// Filtre Mot
     const FiltreMot = (mots) => {
         filtre.mots = mots;
-        setFiltreRessources(filtre);
+        //setFiltreRessources(filtre);
         console.log(filtreRessources);
     }
 
@@ -88,7 +125,7 @@ export default function Ressources(){
                         name=""
                         type="text"
                         className="inputRecherche"
-                        placeholder="Recherche"
+                        placeholder="Recherche dans le nom"
                         onChange={(e) => FiltreMot(e.target.value)}
                     />
                     <FontAwesomeIcon 
@@ -148,7 +185,7 @@ export default function Ressources(){
                     >+ Ajout d'une nouvelle ressource</button>
             </div>
             <div>
-                    <ListeRessources filtre={filtreRessources} categories={cats}/>
+                    <ListeRessources filtre={filtreRessources} ressources={ressources} categories={cats} />
             </div>
         </div>
 
@@ -163,7 +200,7 @@ export default function Ressources(){
                 Ajout d'une nouvelle ressource</Modal.Header>
             <Modal.Body>
                 <div className="d-flex mb-2">
-                <label className="labelFieldModalRes" style={{paddingRight:"20px"}}>Catégorie</label>
+                <label className="labelFieldModalRes" style={{paddingRight:"15px"}}>Catégorie*</label>
                     <select 
                         style={{paddingLeft:"10px",width:"100%"}}
                         className="field_resCreate"
@@ -178,8 +215,13 @@ export default function Ressources(){
                         )}
                     </select>
                 </div>
+                {messageCat &&
+                    <><div className="d-flex mb-2"></div>
+                    <div className="w-25" style={{fontSize:".7em",color:"red"}}>{messageCat}</div></>
+                }
+                
                 <div className="d-flex mb-2">
-                    <label className="labelFieldModalRes w-25">Nom </label>
+                    <label className="labelFieldModalRes w-25">Nom* </label>
                     <input 
                         name="nom"
                         type="text" 
@@ -197,13 +239,17 @@ export default function Ressources(){
                         <Form.Group 
                             controlId="formFileSm" 
                             className="mb-3" 
+                            name="input-file"
+                            label='File'
                             style={{width:"100%"}}>
                         <Form.Control 
                             type="file" 
-                            onChange={(e) => 
+                            onChange={(e) => {
+                                console.log("url doc video : ",e.target.files[0])
                                 setResCreate({
                                     ...resCreate,
-                                    video:e.target.value})
+                                    video:e.target.files[0]})
+                            }
                             }/>
                             
                         </Form.Group>

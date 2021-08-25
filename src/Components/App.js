@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav} from 'react-bootstrap';
 import {
   BrowserRouter as Router,
@@ -20,27 +20,27 @@ export default function App() {
   const [niv1, setNiv1] = useState(window.location.pathname);
 
   /// Mise en commentaire pour ne pas retomber sur la page de connexion à chaque mise à jour
-  /*if(!token && MenuSelectAccueil==undefined) {
+/*   if(!token && MenuSelectAccueil==undefined) {
     return <Login setToken={setToken} />
   }
 
   if(token && MenuSelectAccueil==undefined){
     return <Accueil userSelect={setMenu}/>
-  }*/
+  }
 
-  const RedirectionAccueil = () => {
-    switch (MenuSelectAccueil) {
-      case "cat" :
-        <Redirect to={MENU1_PATH} push />
-        break;
-      case "res" :
-        <Redirect to={MENU2_PATH} push />
-        break;
-      default :
-        break;
-    }
-  };
-
+    
+  if(token && MenuSelectAccueil){
+      switch (MenuSelectAccueil) {
+        case "cat" :
+          //redirect vers categorie
+          break;
+        case "res" :
+          //redirect vers ressource
+          break;
+        default :
+          break;
+      }
+  }; */
 
   return (
     <Router>
@@ -68,11 +68,11 @@ export default function App() {
       </Navbar>
       
       <Switch>
-          <Route exact path={MENU1_PATH} >
+          <Route path={MENU1_PATH} >
             <Categories />
           </Route>
           <Route path={MENU2_PATH}>
-              <Ressources />
+            <Ressources />
           </Route>
       </Switch>
     </Router>
@@ -82,10 +82,7 @@ export default function App() {
 const styles = {};
 
 styles.navItem = {
-  /*fontSize:"1.3em",*/
   paddingTop:"4rem",
-  /*paddingBottom:"0",
-  margin:"0", */
   color:"rgb(174, 224, 250)", 
 };
 

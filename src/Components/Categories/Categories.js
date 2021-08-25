@@ -1,38 +1,51 @@
 import React, { useState, useEffect } from "react";
 import Modal from 'react-bootstrap/Modal';
-import ListeCategories from "./ListeCategories";
+import CategorieItem from "./CategorieItem";
 import { SaveNewCat } from "../../api/APIUtils";
 import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
+import { add }  from "../../reducers/categoriesReducer";
+import { useSelector, useDispatch } from 'react-redux';
+import { DeleteCategorie } from "../../api/APIUtils";
 import "../../Styles/Categorie.css";
 
 
 export default function Categories() {
-    const [cats, setCats] = useState([]);
+    const dispatch = useDispatch();
+    const modelCat = {nom:"",id:null,ages:[]};
     const [ModalCreate, setModalCreate] = useState(false);
-    const [catCreate, setCatCreate] = useState({nom:"",id:null,ages:[]});
+    const [catCreate, setCatCreate] = useState(modelCat);
     
     // Chargement des catégories
-    useEffect(() => {
-        fetch("categories.json") // Fichier statique de prod placé dans public
-            .then(resp => resp.json())
-            .then(data => setCats(data))
-    }, [])
+    let cats = useSelector(state => state.categories);
 
-    const newCategorie = (newItem) => {
+    /////// NEw categorie
+
+    const newCategorie = () => {
         let agesNewItemBdd = [];
-        if(newItem.age1) agesNewItemBdd.push(AGE1);
-        if(newItem.age2) agesNewItemBdd.push(AGE2);
-        if(newItem.age3) agesNewItemBdd.push(AGE3);
-        if(newItem.age4) agesNewItemBdd.push(AGE4);
+        if(catCreate.age1) agesNewItemBdd.push({age:AGE1});
+        if(catCreate.age2) agesNewItemBdd.push({age:AGE2});
+        if(catCreate.age3) agesNewItemBdd.push({age:AGE3});
+        if(catCreate.age4) agesNewItemBdd.push({age:AGE4});
 
+        //// New unused Id
+        const idsSort = cats.map((cat) => cat.id).sort();
+        const highId:Number = Number(idsSort[idsSort.length - 1]);
+        const newId:Number = highId + 1;
+
+        /// new cat au format bdd
         let catBdd = {
-            nom:newItem.nom,
-            ages:agesNewItemBdd
+            id:newId,
+            nom:catCreate.nom,
+            ages:agesNewItemBdd,
+            supprimable:true
         };
         
-        //Méthode d'envoi (à terminer)
+        //Méthode d'envoi bdd et maj redux
         SaveNewCat(catBdd)
-            .then(setModalCreate(false));
+            .then(dispatch(add(catBdd)))
+            .then(setModalCreate(false))
+        
+        if(ModalCreate) setCatCreate(modelCat);
         
     };
 
@@ -46,7 +59,9 @@ export default function Categories() {
                         >+ Ajout d'une nouvelle categorie</button>
                 </div>
                 <div>
-                    <ListeCategories cats={cats}/>
+                    {cats.map((cat,index) => (
+                        <CategorieItem cats={cats} categorie={cat} index={index}/>
+                    ))}
                 </div>
             </div>
 
@@ -124,7 +139,7 @@ export default function Categories() {
                 </Modal.Body>
                 <Modal.Footer>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setModalCreate(false)}>Annuler</button>
-                <button type="button" class="btn btn-primary" onClick={() => newCategorie(catCreate)}>Enregistrer</button>
+                <button type="button" class="btn btn-primary" onClick={() => newCategorie()}>Enregistrer</button>
                 </Modal.Footer>
             </Modal>
         </>

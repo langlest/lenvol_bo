@@ -39,5 +39,18 @@
                 "descriptif":"réesau des yaplusqua"
             }
         ]
+    },
+    {
+        "id":4,
+        "nom":"Pourquoi pas",
+        "categorie":"Activité musique",
+        "video":"video.mpg",
+        "documents":[],
+        "liens":[
+            {
+                "url":"http://www.pourquoipas.com",
+                "descriptif":"Tout savoir sur les pourquoipas"
+            }
+        ]
     }
 ]
