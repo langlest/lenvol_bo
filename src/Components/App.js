@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { Container, Col, Row,Navbar, Nav, Image} from 'react-bootstrap';
+import { Navbar, Nav} from 'react-bootstrap';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,7 +7,6 @@ import {
   Redirect,
   Link
 } from "react-router-dom";
-import logo from '../Images/Logo-Blanc-CMJN.png';
 import Login from './Login/Login'; 
 import useToken from '../App/useToken';
 import Accueil from "./Accueil";
@@ -22,33 +20,33 @@ export default function App() {
   const [niv1, setNiv1] = useState(window.location.pathname);
 
   /// Mise en commentaire pour ne pas retomber sur la page de connexion à chaque mise à jour
-  /*if(!token && MenuSelectAccueil==undefined) {
+/*   if(!token && MenuSelectAccueil==undefined) {
     return <Login setToken={setToken} />
   }
 
   if(token && MenuSelectAccueil==undefined){
     return <Accueil userSelect={setMenu}/>
-  }*/
+  }
 
-  const RedirectionAccueil = () => {
-    switch (MenuSelectAccueil) {
-      case "cat" :
-        <Redirect to={MENU1_PATH} push />
-        break;
-      case "res" :
-        <Redirect to={MENU2_PATH} push />
-        break;
-      default :
-        break;
-    }
-  };
-
+    
+  if(token && MenuSelectAccueil){
+      switch (MenuSelectAccueil) {
+        case "cat" :
+          //redirect vers categorie
+          break;
+        case "res" :
+          //redirect vers ressource
+          break;
+        default :
+          break;
+      }
+  }; */
 
   return (
     <Router>
       <Navbar style={{backgroundColor:"rgb(36,155,215)"}}  className="p-0 m-0">
         
-          <Navbar.Brand className="p-0 m-0" >
+          <Navbar.Brand className="p-0 m-2" >
             <div className="logoMenu" />
           </Navbar.Brand>
           <Nav className="me-auto justify-content-center text-center">
@@ -67,11 +65,10 @@ export default function App() {
               >{MENU2_NAME}
               </Nav.Link>
           </Nav>
-        
       </Navbar>
       
       <Switch>
-          <Route exact path={MENU1_PATH} >
+          <Route path={MENU1_PATH} >
             <Categories />
           </Route>
           <Route path={MENU2_PATH}>
@@ -85,10 +82,7 @@ export default function App() {
 const styles = {};
 
 styles.navItem = {
-  /*fontSize:"1.3em",*/
-  paddingTop:"3rem",
-  /*paddingBottom:"0",
-  margin:"0", */
+  paddingTop:"4rem",
   color:"rgb(174, 224, 250)", 
 };
 
