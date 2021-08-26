@@ -55,14 +55,10 @@ export default function Ressources(){
     let inputOk = true;
     const newRessource = () => {
         // Verification des input obligatoires
-        if(resCreate.nom === ""){
-            inputOk = false;
-            setMessageNom(messageNom.concat("Nom obligatoire."));
-        }
-        if(resCreate.categorie === ""){
-            inputOk = false;
-            setMessageCat(messageCat.concat(" Catégorie obligatoire."));
-        }
+        resCreate.nom === "" ? setMessageNom("Nom obligatoire.") : setMessageNom("");
+        resCreate.categorie === "" ? setMessageCat("Catégorie obligatoire.") : setMessageCat("");
+        resCreate.nom === "" || resCreate.categorie === "" ?   inputOk = false : inputOk = inputOk;
+            
         // Enregistrement
         if(inputOk){
             const ids = ressources.map((res) => res.id).sort();
@@ -216,10 +212,11 @@ export default function Ressources(){
                     </select>
                 </div>
                 {messageCat &&
-                    <><div className="d-flex mb-2"></div>
-                    <div className="w-25" style={{fontSize:".7em",color:"red"}}>{messageCat}</div></>
+                    <div className="d-flex mb-2">
+                        <div className="labelFieldModalRes w-25"></div>
+                        <div className="w-25" style={{fontSize:".7em",color:"red"}}>{messageCat}</div>
+                    </div>
                 }
-                
                 <div className="d-flex mb-2">
                     <label className="labelFieldModalRes w-25">Nom* </label>
                     <input 
@@ -234,6 +231,12 @@ export default function Ressources(){
                         }}>
                     </input>
                 </div>
+                {messageNom &&
+                    <div className="d-flex mb-2">
+                        <div className="labelFieldModalRes w-25"></div>
+                        <div className="w-25" style={{fontSize:".7em",color:"red"}}>{messageNom}</div>
+                    </div>
+                }
                 <div className="d-flex">
                     <label className="labelFieldModalRes w-25">Vidéo </label>
                         <Form.Group 
