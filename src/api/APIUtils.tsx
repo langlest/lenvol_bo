@@ -1,3 +1,5 @@
+import {Ressource} from '../model/Ressource';
+import {Categorie} from '../model/Categorie';
 const domainPath = 'http://localhost:8080/';
 const localPath = 'http://localhost:3000/';
 const localFolder = "C:/Users/frederic.langlest/source/repos/CoeurUmanis/Lenvol/lenvol_bo/public/";
@@ -5,7 +7,7 @@ const localFolder = "C:/Users/frederic.langlest/source/repos/CoeurUmanis/Lenvol/
 /////////////////////////////////
 ////////  API 
 ////////  connexion avec serveur
-export async function LoginApi(username,password){
+export async function LoginApi(username:string,password:string){
     
     const routeApi = 'login';
     const uriApi = domainPath+routeApi;
@@ -23,7 +25,7 @@ export async function LoginApi(username,password){
 }
 
 ////////  connexion locale sans serveur
-export async function LoginDev(username,password){
+export async function LoginDev(username:string,password:string){
   console.log("API LoginDev var unsername : ",username);
     const t = {"token":"test123"};
     return t;
@@ -51,15 +53,15 @@ export async function ListeCategoriesServer(){
       });
 }
 
-export async function SaveNewCat(newCat){
+export async function SaveNewCat(newCat:Categorie){
     console.log("Enregistrement dans la base du nouvel element 'categorie' ",newCat);
     return true;
 }
-export async function DeleteCategorie(id){
+export async function DeleteCategorie(id:number){
   console.log("Suppression de la categorie "+id+" de la base");
   return true;
 }
-export async function EditCategorie(item){
+export async function EditCategorie(item: Categorie) {
   console.log("Mise à jour de la categorie "+item.id+" en base");
   return true;
 }
@@ -81,7 +83,7 @@ export async function ListeRessourcesServer(){
   fetch("ressources.json")
       .then(response => response.json());
 }
-export async function SaveNewRes(newRes){
+export async function SaveNewRes(newRes:Ressource){
   console.log("[SaveNewRes]",newRes);
   const formData = new FormData();
 
@@ -117,8 +119,11 @@ export async function SaveNewRes(newRes){
 			}); */
       return true;
 }
-
-export async function DeleteRessource(id){
+export async function DeleteRessource(id:number){
   console.log("Suppression de la ressource "+id+" de la base");
+  return true;
+}
+export async function EditRessource(res:Ressource){
+  console.log("Edition de la ressource "+res.id+" de la base");
   return true;
 }

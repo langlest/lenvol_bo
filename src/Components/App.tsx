@@ -13,6 +13,7 @@ import Accueil from "./Accueil";
 import Ressources from "./Ressources/Ressources";
 import Categories from "./Categories/Categories";
 import {MENU1_PATH, MENU1_NAME, MENU2_PATH, MENU2_NAME} from "../App/constantes";
+import "./../Styles/App.css"
 
 export default function App() {
   const { token, setToken } = useToken();
@@ -51,14 +52,14 @@ export default function App() {
           </Navbar.Brand>
           <Nav className="me-auto justify-content-center text-center">
             <Nav.Link 
-              style={niv1 === MENU1_PATH ? styles.navItemActived : styles.navItem}
+              className={niv1 === MENU1_PATH ? "navItemActived" : "navItem"}
               as={Link} 
               to={MENU1_PATH} 
               onClick={() => setNiv1(MENU1_PATH)}
               >{MENU1_NAME}
             </Nav.Link>
             <Nav.Link 
-              style={niv1 === MENU2_PATH ? styles.navItemActived : styles.navItem}
+              className={niv1 === MENU2_PATH ? "navItemActived" : "navItem"}
               as={Link} 
               to={MENU2_PATH} 
               onClick={() => setNiv1(MENU2_PATH)}
@@ -79,16 +80,4 @@ export default function App() {
   );
 }
 
-const styles = {};
-
-styles.navItem = {
-  paddingTop:"4rem",
-  color:"rgb(174, 224, 250)", 
-};
-
-styles.navItemActived = {
-  ...styles.navItem,
-  borderBottom:"2px solid white",
-  color:"white"
-};
 

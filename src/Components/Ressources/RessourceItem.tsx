@@ -6,50 +6,40 @@ import Modal from 'react-bootstrap/Modal';
 import {Row, Col, Form, Pagination} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPen, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { DeleteRessource, SaveNewRes, EditRessource } from "../../api/APIUtils";
-import { 
-    init,
-    add,
-    edit,
-    del,
-    selectRessources}  from "../../reducers/ressourcesReducer";
-import { useSelector, useDispatch } from 'react-redux';
+import { DeleteRessource, EditRessource } from "../../api/APIUtils";
+import { Ressource } from "../../model/Ressource";
+import { edit, del }  from "../../reducers/ressourcesReducer";
+import { useDispatch } from 'react-redux';
 
-export default function RessourceItem(props){
+export default function RessourceItem(props:any){
     const ressources = props.ressources;
     const ressource = props.ressource;
     const index = props.index;
     const dispatch = useDispatch();
     const [activeIndexRes, setActiveIndexRes] = useState(null);
 
-    const [ModalEdit, setModalEdit] = useState(false);
-    const [descriptifInput, setDescriptifInput] = useState(false);
-    let newLien = null;
-    let lienInput = React.createRef();
-    const [ModalDelete, setModalDelete] = useState(false);
-
-
-    const handleClose = () => setModalDelete(false);
     /////////// DELETE
-    const [resDelete, setResDelete] = useState({nom:"",id:null});
-    const deleteConfirm = (id) => {
-        ressources.forEach(item =>{
+    const [ModalDelete, setModalDelete] = useState(false);
+    const [resDelete, setResDelete] = useState<Ressource>();
+    const handleClose = () => setModalDelete(false);
+    const deleteConfirm = (id:number) => {
+        ressources.forEach((item:Ressource) =>{
             if(item.id === id){
                 setResDelete(item);
             }
         });
         setModalDelete(true);
     };
-    const deleteRes = (id) => {
+    const deleteRes = (id:number) => {
         console.log("Suppression confirmée de la catégorie id:"+id);
         /// Envoi en base ET suppression de la liste Redux
         DeleteRessource(id)
-            .then(dispatch(del(id)));
+            .then(() => dispatch(del(id)));
         
         handleClose();
     };
     ////////////// EDIT
-    const [resEdit, setResEdit] = useState({
+    const [resEdit, setResEdit] = useState<Ressource>({
         id:"",
         nom:"",
         categorie:"",
@@ -57,10 +47,15 @@ export default function RessourceItem(props){
         documents:[],
         liens:[]
     });
-    const editResDemand = (id) => {
-        ressources.forEach((item) => {
+    const [ModalEdit, setModalEdit] = useState(false);
+    const [descriptifInput, setDescriptifInput] = useState(false);
+    let newLien:string = "";
+    let lienInput = React.createRef();
+
+    const editResDemand = (id:number) => {
+        ressources.forEach((item:Ressource) => {
             if(item.id === id){
-                let resForm = {
+                let resForm:any = {
                     id:item.id,
                     nom:item.nom,
                     categorie:item.categorie,
@@ -75,14 +70,14 @@ export default function RessourceItem(props){
     };
     const validEditRes = () => {
         // Envoi en base ET modeif de la liste Redux
-        SaveNewRes(resEdit)
-            .then(dispatch(edit(resEdit)));
+        EditRessource(resEdit)
+            .then(() => dispatch(edit(resEdit)));
         
-        newLien=null;
+        newLien="";
         setModalEdit(false);
     };  
-    const resetLienInput = () => {
-        lienInput.current.value = "";
+    const resetLienInput = (e:any) => {
+        e.value = "";
     };
     
     ////////// Gestion video
@@ -344,7 +339,7 @@ export default function RessourceItem(props){
                         />
                         <div className="btnTextModalRes" 
                             style={{cursor:"pointer",marginLeft:"6px"}}
-                            onClick={() => {
+                            onClick={(e) => {
                                 const ar = resEdit.liens;
                                 let lastLink = ar[ar.length-1];
                                 lastLink.descriptif = newLien.descriptif;
@@ -354,7 +349,7 @@ export default function RessourceItem(props){
                                 });
                                 newLien = null;
                                 setDescriptifInput(false);
-                                resetLienInput();
+                                resetLienInput(e);
                             }}
                             >Ajouter
                         </div>

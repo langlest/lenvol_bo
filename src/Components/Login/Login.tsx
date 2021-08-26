@@ -9,15 +9,12 @@ import {ERREUR_PASSWORD, FOOTER_LOGIN, HEADER_LOGIN} from "../../App/constantes"
 import '../../Styles/Login.css';
 
 
-export default function Login({ setToken }){
+export default function Login({ setToken }:any){
 
-  const validateToken = async (values) => {
-    const username = values.email;
-    const password = values.password;
-    const token = await LoginDev({
-      username,
-      password
-    });
+  const validateToken = async (values:any) => {
+    const username:string = values.email;
+    const password:string = values.password;
+    const token = await LoginDev(username, password);
     setToken(token);
   };
 
@@ -27,7 +24,7 @@ export default function Login({ setToken }){
 }
 
 
-const ValidatedLoginForm = (validateToken) => (
+const ValidatedLoginForm = (validateToken:any) => (
   <Formik
     initialValues={{ email: "", password: "" }}
     onSubmit={(values, { setSubmitting }) => {
@@ -35,7 +32,8 @@ const ValidatedLoginForm = (validateToken) => (
         setSubmitting(false);
     }}
     validate={values => {
-      let errors = {};
+      let errors : {password:string};
+      errors = {password : ""};
       
       //!values.email || !EmailValidator.validate(values.email) || 
       const passwordRegex = /(?=.*[0-9])/;
@@ -68,13 +66,13 @@ const ValidatedLoginForm = (validateToken) => (
                 <div style={{color:'white',fontWeight: 'lighter'}}>{HEADER_LOGIN}</div>
                 <div style={{marginBottom:"5px"}}>
                   <input 
-                  id="email"
-                  name="email"
-                  type="text" 
-                  placeholder="Identifiant" 
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={errors.email && touched.email && "error"}
+                    id="email"
+                    name="email"
+                    type="text" 
+                    placeholder="Identifiant" 
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    className={String(errors.email) && String(touched.email) && "error"}
                   />
                 </div>
                 <div>
@@ -87,14 +85,14 @@ const ValidatedLoginForm = (validateToken) => (
                   //onChange={e => setPassword(e.target.value)}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  className={errors.password && touched.password && "error"}
+                  className={String(errors.password) && String(touched.password) && "error"}
                   />
                   {errors.password && touched.password && (
                     <div className="input-feedback">{errors.password}</div>
                   )}
                 </div>
                 <div className="form-item" style={{padding:'5px',marginLeft:'200px'}}>
-                  <button type="submit" class="btn btn-primary" disabled={isSubmitting}>Connexion</button>
+                  <button type="submit" className="btn btn-primary" disabled={isSubmitting}>Connexion</button>
                 </div>   
               </form>
               <div className="footer" >
