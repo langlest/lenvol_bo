@@ -45,7 +45,8 @@ export default function CategorieItem (props:any){
         age1?: boolean,
         age2?: boolean,
         age3?: boolean,
-        age4?: boolean
+        age4?: boolean,
+        supprimable:boolean
     }
 
     catForm = {
@@ -54,7 +55,8 @@ export default function CategorieItem (props:any){
         age1 : false,
         age2 : false,
         age3 : false,
-        age4 : false
+        age4 : false,
+        supprimable:true
     };
     const [ModalEdit, setModalEdit] = useState(false);
     const [catEdit, setCatEdit] = useState<typeof catForm>(catForm);
@@ -66,6 +68,7 @@ export default function CategorieItem (props:any){
             age2:categorie.ages.some(a => a.age === AGE2),
             age3:categorie.ages.some(a => a.age === AGE3),
             age4:categorie.ages.some(a => a.age === AGE4),
+            supprimable:categorie.supprimable
         };
         setCatEdit(catFormValue);
         setModalEdit(true);
@@ -76,11 +79,8 @@ export default function CategorieItem (props:any){
         if(catEdit!.age2) agesEdited.push({age:AGE2});
         if(catEdit!.age3) agesEdited.push({age:AGE3});
         if(catEdit!.age4) agesEdited.push({age:AGE4});
-        const categorieEdited:any = {
-            id:catEdit!.id,
-            nom:catEdit!.nom,
-            ages:agesEdited
-        }
+        const categorieEdited = new Categorie(Number(catEdit.id),String(catEdit.nom),agesEdited,catEdit.supprimable)
+
         /// Mise à jour de la modification en Bdd puis Redux
         EditCategorie(categorieEdited) 
             .then(() => dispatch(edit(categorieEdited)))
@@ -90,6 +90,7 @@ export default function CategorieItem (props:any){
             setCatEdit(catVide);
     };  
 
+    console.log(categorie)
     return (
         <>
         <div className="row ligneCat">

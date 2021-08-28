@@ -232,6 +232,7 @@ export default function Ressources(){
                         <div className="w-25" style={{fontSize:".7em",color:"red"}}>{messageNom}</div>
                     </div>
                 }
+                {resCreate.video.length === 0 &&
                 <div className="d-flex">
                     <label className="labelFieldModalRes w-25">Vidéo </label>
                         <Form.Group 
@@ -241,16 +242,32 @@ export default function Ressources(){
                         <Form.Control 
                             type="file" 
                             onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
-                                const file = e.target.files?.length ? e.target.files[0] : "";
-                                console.log("url doc video : ",file)
+                                const fileName = e.target.files?.length ? e.target.files[0].name : "";
+                                console.log("url doc video : ",fileName)
                                 setResCreate({
                                     ...resCreate,
-                                    video:String(file)})
+                                    video:String(fileName)})
                             }
                             }/>
                             
                         </Form.Group>
                 </div>
+                }
+                {resCreate.video.length > 0 &&
+                    <Row className="d-flex mb-3">
+                        <Col className="labelFieldModalRes col-2" >Vidéo </Col>
+                        <Col className="d-flex col-8" >
+                            <span style={{fontSize:".8em", paddingTop:"9px",marginLeft:"30px"}}>{resCreate.video} </span>
+                        </Col>
+                        <Col className="col-1" style={{marginLeft:"30px",paddingTop:"9px",fontSize:".9em",cursor: "pointer"}}  onClick={()=> {
+                            setResCreate({
+                                ...resCreate,
+                                video:""});
+                            }}>
+                            <FontAwesomeIcon icon={faTrashAlt} />
+                        </Col>
+                    </Row>
+                }
                 <div className="d-flex">
                     <label className="labelFieldModalRes w-25">Documents </label>
                         <Form.Group controlId="formFileSm" className="mb-3 " style={{width:"100%"}}>

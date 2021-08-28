@@ -1,6 +1,11 @@
-class lien{
+export class Lien{
     public url:string = "";
     public descriptif:string = "";
+
+    constructor(url:string,descriptif:string){
+        this.url=url;
+        this.descriptif=descriptif;
+    }
 };
 
 export class Ressource {
@@ -9,9 +14,9 @@ export class Ressource {
     public nom:string;
     public video:string;
     public documents:string[];
-    public liens:lien[];
+    public liens:Lien[];
 
-    constructor(id:number | null,categorie:string,nom:string,video:string,documents:string[],liens:lien[]){
+    constructor(id:number | null,categorie:string,nom:string,video:string,documents:string[],liens:Lien[]){
         this.id = id;
         this.categorie = categorie;
         this.nom = nom;

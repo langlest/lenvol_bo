@@ -1,14 +1,4 @@
-.navItem {
-    padding-top:4rem;
-    color:rgb(174, 224, 250);
-  };
-  
- .navItemActived{
-    padding-top:4rem;
-    color:rgb(174, 224, 250);
-    border-bottom:2px solid white;
-    color:white;
-  };
+
 
 @media (min-width: 530px){
     

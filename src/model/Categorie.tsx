@@ -1,4 +1,4 @@
-class Age{
+export class Age{
     public age:string;
 
     constructor(age:string){

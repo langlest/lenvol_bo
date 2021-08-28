@@ -1,6 +1,10 @@
 
+import { Age } from "../model/Categorie";
+
 export interface FilterState {
-  value: Object
+  searchTerm:string,
+  ages:Age[],
+  categories:string[]
 };
 
 const INITIAL_STATE : FilterState = {
@@ -9,7 +13,7 @@ const INITIAL_STATE : FilterState = {
     categories:[]
   };
   
-  function filterReducer(state = INITIAL_STATE, action) {
+  function filterReducer(state = INITIAL_STATE, action:any) {
     switch (action.type) {
       case 'FILTER_SET':
         return { ...state, 
