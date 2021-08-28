@@ -5,23 +5,40 @@ import { SaveNewCat } from "../../api/APIUtils";
 import {AGE1, AGE2, AGE3, AGE4} from "../../App/constantes";
 import { add }  from "../../reducers/categoriesReducer";
 import { useSelector, useDispatch } from 'react-redux';
-import { DeleteCategorie } from "../../api/APIUtils";
+
 import "../../Styles/Categorie.css";
+import { Categorie } from "../../model/Categorie";
 
 
 export default function Categories() {
     const dispatch = useDispatch();
-    const modelCat = {nom:"",id:null,ages:[]};
+    const modelCat:Categorie = new Categorie(0,"",[],true);
     const [ModalCreate, setModalCreate] = useState(false);
-    const [catCreate, setCatCreate] = useState(modelCat);
+    let catCreateModel : {
+        id: number,
+        nom: string,
+        age1: boolean,
+        age2: boolean,
+        age3: boolean,
+        age4: boolean
+    }
+    catCreateModel = {
+        id : 0,
+        nom : "",
+        age1 : false,
+        age2 : false,
+        age3 : false,
+        age4 : false
+    };
+    const [catCreate, setCatCreate] = useState<typeof catCreateModel>(catCreateModel);
     
     // Chargement des catégories
-    let cats = useSelector(state => state.categories);
+    let cats:Categorie[] = useSelector((state:any) => state.categories);
 
     /////// NEw categorie
-
+    let ageModel : {age:string};
     const newCategorie = () => {
-        let agesNewItemBdd = [];
+        let agesNewItemBdd:typeof ageModel[]= [];
         if(catCreate.age1) agesNewItemBdd.push({age:AGE1});
         if(catCreate.age2) agesNewItemBdd.push({age:AGE2});
         if(catCreate.age3) agesNewItemBdd.push({age:AGE3});
@@ -29,23 +46,18 @@ export default function Categories() {
 
         //// New unused Id
         const idsSort = cats.map((cat) => cat.id).sort();
-        const highId:Number = Number(idsSort[idsSort.length - 1]);
-        const newId:Number = highId + 1;
+        const highId:number = Number(idsSort[idsSort.length - 1]);
+        const newId:number = highId + 1;
 
         /// new cat au format bdd
-        let catBdd = {
-            id:newId,
-            nom:catCreate.nom,
-            ages:agesNewItemBdd,
-            supprimable:true
-        };
+        let catBdd:Categorie = new Categorie(newId, catCreate.nom, agesNewItemBdd, true);
         
         //Méthode d'envoi bdd et maj redux
         SaveNewCat(catBdd)
-            .then(dispatch(add(catBdd)))
-            .then(setModalCreate(false))
+            .then(() => dispatch(add(catBdd)))
+            .then(() => setModalCreate(false))
         
-        if(ModalCreate) setCatCreate(modelCat);
+        if(ModalCreate) setCatCreate(catCreateModel);
         
     };
 
@@ -90,7 +102,7 @@ export default function Categories() {
                             className="checkBoxEditCat"
                             onChange={(e) => setCatCreate({
                                 ...catCreate,
-                                age1:e.target.value
+                                age1:Boolean(e.target.value)
                             })}
                         />
                         <label>
@@ -104,7 +116,7 @@ export default function Categories() {
                             className="checkBoxEditCat"
                             onChange={(e) => setCatCreate({
                                 ...catCreate,
-                                age2:e.target.value
+                                age2:Boolean(e.target.value)
                             })} />
                         <label>
                             {AGE2} :
@@ -117,7 +129,7 @@ export default function Categories() {
                             className="checkBoxEditCat"
                             onChange={(e) => setCatCreate({
                                 ...catCreate,
-                                age3:e.target.value
+                                age3:Boolean(e.target.value)
                             })} />
                         <label>
                             {AGE3} :
@@ -130,7 +142,7 @@ export default function Categories() {
                             className="checkBoxEditCat"
                             onChange={(e) => setCatCreate({
                                 ...catCreate,
-                                age4:e.target.value
+                                age4:Boolean(e.target.value)
                             })} />
                         <label style={{width:"150px"}}>
                             {AGE4}
@@ -138,8 +150,8 @@ export default function Categories() {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => setModalCreate(false)}>Annuler</button>
-                <button type="button" class="btn btn-primary" onClick={() => newCategorie()}>Enregistrer</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setModalCreate(false)}>Annuler</button>
+                <button type="button" className="btn btn-primary" onClick={() => newCategorie()}>Enregistrer</button>
                 </Modal.Footer>
             </Modal>
         </>

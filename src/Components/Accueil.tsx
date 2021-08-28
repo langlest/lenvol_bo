@@ -2,9 +2,9 @@ import React from "react";
 import '../Styles/Accueil.css';
 import {FOOTER_LOGIN, HEADER_LOGIN, MENU1_NAME, MENU2_NAME} from "../App/constantes";
 
-export default function Accueil({userSelect}){
+export default function Accueil({userSelect}:any){
 
-    const selectMenu = (menu) =>{
+    const selectMenu = (menu:string) =>{
         userSelect(menu); 
     };
 

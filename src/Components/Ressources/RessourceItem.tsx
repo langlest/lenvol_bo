@@ -6,61 +6,56 @@ import Modal from 'react-bootstrap/Modal';
 import {Row, Col, Form, Pagination} from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faPen, faPlay } from '@fortawesome/free-solid-svg-icons';
-import { DeleteRessource, SaveNewRes, EditRessource } from "../../api/APIUtils";
-import { 
-    init,
-    add,
-    edit,
-    del,
-    selectRessources}  from "../../reducers/ressourcesReducer";
-import { useSelector, useDispatch } from 'react-redux';
+import { DeleteRessource, EditRessource } from "../../api/APIUtils";
+import { Ressource, Lien } from "../../model/Ressource";
+import { Categorie } from "../../model/Categorie";
+import { edit, del }  from "../../reducers/ressourcesReducer";
+import { useDispatch } from 'react-redux';
 
-export default function RessourceItem(props){
+export default function RessourceItem(props:any){
     const ressources = props.ressources;
     const ressource = props.ressource;
     const index = props.index;
     const dispatch = useDispatch();
     const [activeIndexRes, setActiveIndexRes] = useState(null);
+    const ressourceModel:Ressource = new Ressource(0,"","","",[],[]);
 
-    const [ModalEdit, setModalEdit] = useState(false);
-    const [descriptifInput, setDescriptifInput] = useState(false);
-    let newLien = null;
-    let lienInput = React.createRef();
-    const [ModalDelete, setModalDelete] = useState(false);
-
-
-    const handleClose = () => setModalDelete(false);
     /////////// DELETE
-    const [resDelete, setResDelete] = useState({nom:"",id:null});
-    const deleteConfirm = (id) => {
-        ressources.forEach(item =>{
+    const [ModalDelete, setModalDelete] = useState(false);
+    const [resDelete, setResDelete] = useState<Ressource>(ressourceModel);
+    const handleClose = () => setModalDelete(false);
+    const deleteConfirm = (id:number) => {
+        ressources.forEach((item:Ressource) =>{
             if(item.id === id){
                 setResDelete(item);
             }
         });
         setModalDelete(true);
     };
-    const deleteRes = (id) => {
+    const deleteRes = (id:number | null) => {
         console.log("Suppression confirmée de la catégorie id:"+id);
         /// Envoi en base ET suppression de la liste Redux
-        DeleteRessource(id)
-            .then(dispatch(del(id)));
+        DeleteRessource(Number(id))
+            .then(() => dispatch(del(id)));
         
         handleClose();
     };
+    
     ////////////// EDIT
-    const [resEdit, setResEdit] = useState({
-        id:"",
-        nom:"",
-        categorie:"",
-        video:"",
-        documents:[],
-        liens:[]
-    });
-    const editResDemand = (id) => {
-        ressources.forEach((item) => {
+    const [resEdit, setResEdit] = useState<Ressource>(ressourceModel);
+    const [ModalEdit, setModalEdit] = useState(false);
+    const [descriptifInput, setDescriptifInput] = useState(false);
+    // ref de communication entre inputs
+    let lienInput:any = React.createRef();
+    const resetLienInput = () => {
+        lienInput.current.value = "";
+    };
+    let newLien:string = "";
+
+    const editResDemand = (id:number) => {
+        ressources.forEach((item:Ressource) => {
             if(item.id === id){
-                let resForm = {
+                let resForm:any = {
                     id:item.id,
                     nom:item.nom,
                     categorie:item.categorie,
@@ -75,20 +70,18 @@ export default function RessourceItem(props){
     };
     const validEditRes = () => {
         // Envoi en base ET modeif de la liste Redux
-        SaveNewRes(resEdit)
-            .then(dispatch(edit(resEdit)));
+        EditRessource(resEdit)
+            .then(() => dispatch(edit(resEdit)));
         
-        newLien=null;
+        newLien="";
         setModalEdit(false);
     };  
-    const resetLienInput = () => {
-        lienInput.current.value = "";
-    };
+
     
     ////////// Gestion video
     const [modalVideo, setModalVideo] = useState(false);
     const handleVideoClose = () => setModalVideo(false);
-    const handleVideoOpen = (video) => {
+    const handleVideoOpen = (video:string) => {
         setModalVideo(true);
         src_video[0].src = video;
         console.log(src_video);
@@ -128,7 +121,7 @@ export default function RessourceItem(props){
                             <div><FontAwesomeIcon style={{marginLeft:"30px",marginTop:"3px",cursor:"pointer"}} icon={faPlay} onClick={() => handleVideoOpen(ressource.video)}/></div>
                         </li>}</>
                         <>{ressource.documents && 
-                            ressource.documents.map((doc,i)=>{
+                            ressource.documents.map((doc:string,i:number)=>{
                             return(
                             <li className="d-flex">
                                 <div className="widthProp">Document {i+1}</div>
@@ -138,10 +131,10 @@ export default function RessourceItem(props){
                         })}
                         </>
                             <>{ressource.liens && 
-                                ressource.liens.map((lien,j) => {
+                                ressource.liens.map((lien:Lien,j:number) => {
                                 return(
                                 <li className="d-flex">
-                                    <div className="widthProp f">Lien {j+1}</div>
+                                    <div className="widthProp">Lien {j+1}</div>
                                     <div>: <a href={lien.url} target="_blank">{lien.url}</a><br /> ({lien.descriptif})</div>
                                 </li>)
                             })}
@@ -176,8 +169,8 @@ export default function RessourceItem(props){
             <Modal.Header style={{fontWeight:"bold"}}>Suppression de catégorie</Modal.Header>
             <Modal.Body>Supprimer : '{resDelete.nom}' ?</Modal.Body>
             <Modal.Footer>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"  onClick={handleClose}>Annuler</button>
-                <button type="button" class="btn btn-primary" onClick={() => deleteRes(resDelete.id)}>Supprimer</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal"  onClick={handleClose}>Annuler</button>
+                <button type="button" className="btn btn-primary" onClick={() => deleteRes(resDelete.id)}>Supprimer</button>
             </Modal.Footer>
         </Modal>
 
@@ -202,11 +195,11 @@ export default function RessourceItem(props){
                                 categorie:e.target.value});
                         }}>
                         <option value=""></option>
-                        {props.categories.map((categorie,indexCat) => {
+                        {props.categories.map((categorie:Categorie,indexCat:number) => {
                             return(
                             <option 
                                 value={categorie.nom}
-                                selected={categorie.nom === resEdit.categorie ? "selected" : ""}
+                                selected={categorie.nom === resEdit.categorie}
                                 >{categorie.nom}
                             </option>
                             )}
@@ -236,12 +229,12 @@ export default function RessourceItem(props){
                                 style={{width:"100%"}}>
                             <Form.Control 
                                 type="file" 
-                                directory="docs" 
-                                webkitdirectory="docs"
-                                onChange={(e) => 
+                                onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
+                                    const fileName = e.target.files?.length ? e.target.files[0].name : "";
                                     setResEdit({
                                         ...resEdit,
-                                        video:e.target.value})
+                                        video:fileName})
+                                    }
                                 }/>
                                 
                             </Form.Group>
@@ -267,15 +260,15 @@ export default function RessourceItem(props){
                         <Form.Group controlId="formFileSm" className="mb-3 " style={{width:"100%"}}>
                             <Form.Control 
                             type="file"  
-                            onChange={(e) => {
-                                const ar = resEdit.documents;
+                            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {
+                                let ar:string[] = resEdit.documents;
                                 const newdocLink = e.target.value.split('\\');
                                 const docname = newdocLink[newdocLink.length-1];
                                 ar.push(docname)
                                 setResEdit({
                                     ...resEdit,
                                     documents:ar});
-                                e.target.value = null;}}/>
+                                e.target.value = "";}}/>
                         </Form.Group>
                 </div>
                 {resEdit.documents.length > 0 &&
@@ -305,10 +298,10 @@ export default function RessourceItem(props){
                         name="lien"
                         type="text" 
                         ref={lienInput}
-                        disabled={descriptifInput ? "disabled" : ""}
+                        disabled={descriptifInput}
                         placeholder="Lien url"
                         onChange={(e) => {
-                            newLien.url = e.target.value;
+                            newLien = e.target.value;
                         }}
                         className="field_resCreate "
                         style={{width:"305px"}}
@@ -318,7 +311,7 @@ export default function RessourceItem(props){
                         style={{cursor:"pointer",marginLeft:"6px"}}
                         onClick={() => {
                             const ar = resEdit.liens;
-                            ar.push({url:newLien.url})
+                            ar.push({url:newLien,descriptif:""})
                             setResEdit({
                                 ...resEdit,
                                 liens:ar
@@ -339,20 +332,20 @@ export default function RessourceItem(props){
                             className="field_resCreate"
                             style={{width:"380px"}}
                             onChange={(e) => {
-                                newLien.descriptif = e.target.value
+                                newLien = e.target.value
                             }}
                         />
                         <div className="btnTextModalRes" 
                             style={{cursor:"pointer",marginLeft:"6px"}}
-                            onClick={() => {
+                            onClick={(e) => {
                                 const ar = resEdit.liens;
                                 let lastLink = ar[ar.length-1];
-                                lastLink.descriptif = newLien.descriptif;
+                                lastLink.descriptif = newLien;
                                 setResEdit({
                                     ...resEdit,
                                     liens:ar
                                 });
-                                newLien = null;
+                                newLien = "";
                                 setDescriptifInput(false);
                                 resetLienInput();
                             }}
@@ -386,8 +379,8 @@ export default function RessourceItem(props){
                 }
             </Modal.Body>
             <Modal.Footer>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => {setModalEdit(false); newLien=null}}>Annuler</button>
-                <button type="button" class="btn btn-primary" onClick={validEditRes}>Enregistrer</button>
+                <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => {setModalEdit(false); newLien=""}}>Annuler</button>
+                <button type="button" className="btn btn-primary" onClick={validEditRes}>Enregistrer</button>
             </Modal.Footer>
         </Modal>
     </>

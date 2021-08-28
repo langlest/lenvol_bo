@@ -1,53 +1,51 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { Ressource } from './../model/Ressource';
 
 // Define a type for the slice state
-interface RessourcesState {
-  value: Array
-}
 
-const initialState : Array = 
+
+const initialState : Ressource[] = 
     [
       {
-        "id":1,
-        "nom":"ressource 1",
-        "categorie":"Tutos bien-être et sport",
-        "video":"video.mpg",
-        "documents":[
+        id:1,
+        nom:"ressource 1",
+        categorie:"Tutos bien-être et sport",
+        video:"video.mpg",
+        documents:[
             "charte.pdf"
         ],
-        "liens":[
+        liens:[
             {
-                "url":"http://www.ressources.com",
-                "descriptif":"Toutes les ressoures utiles"
+                url:"http://www.ressources.com",
+                descriptif:"Toutes les ressoures utiles"
             }
         ]
       },
       {
-          "id":2,
-          "nom":"ressource 2",
-          "categorie":"Ateliers cuisine",
-          "video":"ressource1.mp4",
-          "documents":[],
-          "liens":[
+          id:2,
+          nom:"ressource 2",
+          categorie:"Ateliers cuisine",
+          video:"ressource1.mp4",
+          documents:[],
+          liens:[
               {
-                  "url":"http://www.cuisinefacile.com",
-                  "descriptif":"Nos publications"
+                  url:"http://www.cuisinefacile.com",
+                  descriptif:"Nos publications"
               }
           ]
       },
       {
-          "id":3,
-          "nom":"Y a plus qu'à",
-          "categorie":"Activité musique",
-          "video":"video.mpg",
-          "documents":[],
-          "liens":[
+          id:3,
+          nom:"Y a plus qu'à",
+          categorie:"Activité musique",
+          video:"video.mpg",
+          documents:[],
+          liens:[
               {
-                  "url":"http://www.yaplusqua.com",
-                  "descriptif":"réesau des yaplusqua"
+                  url:"http://www.yaplusqua.com",
+                  descriptif:"réesau des yaplusqua"
               }
-          ],
-          "show":false
+          ]
       }
     ]
   
@@ -62,7 +60,7 @@ const initialState : Array =
         const ressourcesApi = fetch("ressources.json")
             .then(response => response.json())
             .then(data => {
-              state.value = ressourcesApi;
+              state = data;
             });
       },
       add(state, action) {
@@ -94,4 +92,4 @@ const initialState : Array =
 
   export const { init, add, edit, del } = ressourcesSlice.actions;
   export default ressourcesSlice.reducer;
-  export const selectRessources = state => state.ressources;
+  export const selectRessources = (state:any) => state.ressources;
