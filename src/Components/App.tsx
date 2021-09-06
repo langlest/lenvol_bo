@@ -12,16 +12,18 @@ import useToken from '../App/useToken';
 import Accueil from "./Accueil";
 import Ressources from "./Ressources/Ressources";
 import Categories from "./Categories/Categories";
+import RessourceEdit from "./Ressources/RessourceEdit";
+import RessourceAdd from "./Ressources/RessourceAdd";
 import {MENU1_PATH, MENU1_NAME, MENU2_PATH, MENU2_NAME} from "../App/constantes";
 import "./../Styles/Login.css"
 
 export default function App() {
   const { token, setToken } = useToken();
-  const [ MenuSelectAccueil, setMenu ] = useState();
+  const [ MenuSelectAccueil, setMenu ] = useState<string>();
   const [niv1, setNiv1] = useState(window.location.pathname);
 
-  /// Mise en commentaire pour ne pas retomber sur la page de connexion à chaque mise à jour
-/*   if(!token && MenuSelectAccueil==undefined) {
+  /// Block de code mi en commentaire pour le dev (evite de retomber sur la page de connexion à chaque mise à jour)
+  /* if(!token && MenuSelectAccueil==undefined) {
     return <Login setToken={setToken} />
   }
 
@@ -41,9 +43,10 @@ export default function App() {
         default :
           break;
       }
-  }; */
+  };  */
 
   return (
+    <div>
     <Router>
       <Navbar style={{backgroundColor:"rgb(36,155,215)"}}  className="p-0 m-0">
         
@@ -79,8 +82,15 @@ export default function App() {
           <Route path={MENU2_PATH}>
             <Ressources />
           </Route>
+          <Route path="/ressource/Edit/:id">
+            <RessourceEdit />
+          </Route>
+          <Route path="/ressource/Add">
+            <RessourceAdd />
+          </Route>
       </Switch>
     </Router>
+    </div>
   );
 }
 

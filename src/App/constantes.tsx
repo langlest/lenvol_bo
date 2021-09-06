@@ -1,3 +1,4 @@
+// Modifier en .json
 export const MENU1_PATH = "/categories";
 export const MENU1_NAME = "Gestion des catégories";
 export const MENU2_PATH = "/ressources";
@@ -11,3 +12,7 @@ export const AGE2 = "11-15 ans";
 export const AGE3 = "15-25 ans";
 export const AGE4 = "Parents / Aidants";
 export const AGES = [AGE1, AGE2, AGE3, AGE4];
+
+// EDITION RESSOURCE
+export const TITRE_EDIT_RESSOURCE = "Modification d'une ressource";
+export const TITRE_ADD_RESSOURCE = "Création d'une nouvelle ressource";

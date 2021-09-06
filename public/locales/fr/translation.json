@@ -1,0 +1,38 @@
+{
+    "menu" : {
+        "menu1_path": "/categories",
+        "menu1_name": "Gestion des catégories",
+        "menu2_path": "/ressources",
+        "menu2_name": "Gestion des ressources"
+    },
+    "login" : {
+        "errour_password" : "Un des champs 'Indentifiant' ou 'Mot de passe' n'est pas corrects",
+        "header_login" : "Bienvenue dans l’administration l’ENVOL",
+        "footer_login" : "Association reconnue d’utilité publique habilitée à recevoir dons, legs et donations"
+    },
+    "ages" : {
+        "age1" : "4-10 ans",
+        "age2" : "11-15 ans",
+        "age3" : "15-25 ans",
+        "age4" : "Parents / Aidants"
+    },
+    "edition" : {
+        "title_edit_ressource" : "Modification d'une ressource",
+        "title_add_ressource" : "Création d'une nouvelle ressource",
+        "title_edit_categorie" : "Modification d'une catégorie",
+        "title_add_categorie" : "Création d'une nouvelle catégorie"
+    },
+    "suppression" : {
+        "title_delete_ressource" : "Suppression de ressource",
+        "title_delete_categorie" : "Suppression de catégorie",
+        "texte_confirmation_ressource" : "Confirmer la suppression de la ressource : ",
+        "texte_confirmation_categorie" : "Confirmer la suppression de la categorie : "
+    },
+    "boutons" : {
+        "annuler" : "Annuler",
+        "supprimer" : "Supprimer",
+        "enregistrer" : "Enregistrer",
+        "valider" : "Valider",
+        "modifier" : "Modifier"
+    }
+}
