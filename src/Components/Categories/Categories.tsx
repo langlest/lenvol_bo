@@ -36,13 +36,12 @@ export default function Categories() {
     let cats:Categorie[] = useSelector((state:any) => state.categories);
 
     /////// NEw categorie
-    let ageModel : {age:string};
     const newCategorie = () => {
-        let agesNewItemBdd:typeof ageModel[]= [];
-        if(catCreate.age1) agesNewItemBdd.push({age:AGE1});
-        if(catCreate.age2) agesNewItemBdd.push({age:AGE2});
-        if(catCreate.age3) agesNewItemBdd.push({age:AGE3});
-        if(catCreate.age4) agesNewItemBdd.push({age:AGE4});
+        let agesNewItemBdd:string[]= [];
+        if(catCreate.age1) agesNewItemBdd.push(AGE1);
+        if(catCreate.age2) agesNewItemBdd.push(AGE2);
+        if(catCreate.age3) agesNewItemBdd.push(AGE3);
+        if(catCreate.age4) agesNewItemBdd.push(AGE4);
 
         //// New unused Id
         const idsSort = cats.map((cat) => cat.id).sort();

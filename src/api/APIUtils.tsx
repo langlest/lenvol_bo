@@ -52,7 +52,6 @@ export async function ListeCategoriesServer(){
         return response.json();
       });
 }
-
 export async function SaveNewCat(newCat:Categorie){
     console.log("Enregistrement dans la base du nouvel element 'categorie' ",newCat);
     return true;
@@ -69,19 +68,18 @@ export async function EditCategorie(item: Categorie) {
 ////////  Ressources
 export async function ListeRessourcesServer(){
     
-  /*const routeApi = 'ressources';
+  const routeApi = 'ressources.json';
   const uriApi = domainPath+routeApi;
   fetch(uriApi, {
   headers: {
     'Content-Type': 'application/json'
   }
   })
+  .then(response => {console.log("[ListeRessourcesServer] response : ",response)
+    return response})
   .then(data => {
     return data.json()
-  });*/
-
-  fetch("ressources.json")
-      .then(response => response.json());
+  });
 }
 export async function SaveNewRes(newRes:Ressource){
   console.log("[SaveNewRes]",newRes);

@@ -64,10 +64,10 @@ export default function CategorieItem (props:any){
         let catFormValue:typeof catForm = {
             id:categorie.id,
             nom:categorie.nom,
-            age1:categorie.ages.some(a => a.age === AGE1),
-            age2:categorie.ages.some(a => a.age === AGE2),
-            age3:categorie.ages.some(a => a.age === AGE3),
-            age4:categorie.ages.some(a => a.age === AGE4),
+            age1:categorie.ages.some(a => a === AGE1),
+            age2:categorie.ages.some(a => a === AGE2),
+            age3:categorie.ages.some(a => a === AGE3),
+            age4:categorie.ages.some(a => a === AGE4),
             supprimable:categorie.supprimable
         };
         setCatEdit(catFormValue);
@@ -75,12 +75,11 @@ export default function CategorieItem (props:any){
     }
     const validEditCat = () => {
         const agesEdited = [];
-        if(catEdit!.age1) agesEdited.push({age:AGE1});
-        if(catEdit!.age2) agesEdited.push({age:AGE2});
-        if(catEdit!.age3) agesEdited.push({age:AGE3});
-        if(catEdit!.age4) agesEdited.push({age:AGE4});
+        if(catEdit!.age1) agesEdited.push(AGE1);
+        if(catEdit!.age2) agesEdited.push(AGE2);
+        if(catEdit!.age3) agesEdited.push(AGE3);
+        if(catEdit!.age4) agesEdited.push(AGE4);
         const categorieEdited = new Categorie(Number(catEdit.id),String(catEdit.nom),agesEdited,catEdit.supprimable)
-
         /// Mise à jour de la modification en Bdd puis Redux
         EditCategorie(categorieEdited) 
             .then(() => dispatch(edit(categorieEdited)))
@@ -90,7 +89,6 @@ export default function CategorieItem (props:any){
             setCatEdit(catVide);
     };  
 
-    console.log(categorie)
     return (
         <>
         <div className="row ligneCat">
@@ -103,7 +101,7 @@ export default function CategorieItem (props:any){
                     <div >
                         <ul className="ElementsCat">
                                 {categorie.ages.map((CatAge,indexAge)=> 
-                                    <li key={indexAge}>{CatAge.age}</li>
+                                    <li key={indexAge}>{CatAge}</li>
                                 )}
                             </ul>
                         
